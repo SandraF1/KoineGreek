@@ -1,7 +1,6 @@
 export default function Unit1Subsection1() {
   return (
-    <div className="app-container">
-    <section>
+    <section className="unit-section">
       <h2>1.3 Consonant clusters</h2>
 
       <p>
@@ -49,6 +48,5 @@ export default function Unit1Subsection1() {
         </tbody>
       </table>
     </section>
-    </div>
   );
 }

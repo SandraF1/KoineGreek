@@ -1,7 +1,6 @@
 export default function Unit1Subsection1() {
   return (
-    <div className="app-container">
-    <section>
+       <section className="unit-section">
       <h2>1.6 Accents</h2>
       <p>
         Finally, you may notice that there are sometimes small marks over the
@@ -47,6 +46,5 @@ export default function Unit1Subsection1() {
         </tbody>
       </table>
     </section>
-    </div>
   );
 }

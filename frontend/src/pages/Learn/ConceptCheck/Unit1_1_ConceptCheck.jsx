@@ -77,7 +77,7 @@ export default function Unit1_ConceptCheck() {
   };
 
   return (
-    <section>
+    <section className="unit-section">
       <h2>Unit 1 Concept Check</h2>
       <p>Select the correct Greek name for each letter:</p>
 

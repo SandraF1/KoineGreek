@@ -1,7 +1,6 @@
 export default function Unit1Subsection1() {
   return (
-    <div className="app-container">
-    <section>
+     <section className="unit-section">
       <h2>1.4 Syllabification</h2>
 
       <p>
@@ -31,6 +30,5 @@ export default function Unit1Subsection1() {
         Greek words prefer to start syllables with consonants, where possible)
       </p>
     </section>
-    </div>
   );
 }

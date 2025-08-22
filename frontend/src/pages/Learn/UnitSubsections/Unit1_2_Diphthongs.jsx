@@ -1,7 +1,6 @@
 export default function Unit1Subsection1() {
   return (
-    <div className="app-container">
-    <section>
+       <section className="unit-section">
       <h2>1.2 Diphthongs</h2>
       <p>
         Diphthongs are vowel combinations considered a single sound. There are
@@ -58,6 +57,5 @@ export default function Unit1Subsection1() {
       </p>
       <p>προϊστάμενος</p>
     </section>
-    </div>
   );
 }

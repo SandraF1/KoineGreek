@@ -2,6 +2,7 @@
    Global styles for the website
    ============================ */
 
+/* Base body */
 body {
   margin: 0;
   padding: 0;
@@ -9,26 +10,27 @@ body {
   font-size: 18px;
   line-height: 1.6;
   color: #111; /* high contrast text */
-  background-color: #ffffff;
+  background-color: #ffffff; /* white background */
 }
 
-/* Container wrapping entire unit page */
+/* ============================
+   Containers
+   ============================ */
 .app-container {
-  max-width: 900px;
+  max-width: 900px; /* consistent width for all content */
   margin: 0 auto;
   padding: 20px;
 }
 
-/* Each section (subsection, vocab, concept check) */
 .unit-section {
-  padding: 2rem;
-  min-height: 500px; /* make all sections tall enough */
+  padding: 1.5rem;
+  min-height: 400px; /* prevents vertical jump */
   margin-bottom: 2rem;
-  box-sizing: border-box; /* ensures consistent sizing */
-  width: 100%;
 }
 
-/* Headings */
+/* ============================
+   Headings
+   ============================ */
 h1,
 h2,
 h3,
@@ -42,7 +44,9 @@ p {
   margin-bottom: 1em;
 }
 
-/* Tables */
+/* ============================
+   Tables
+   ============================ */
 table {
   width: 100%;
   border-collapse: collapse;
@@ -52,7 +56,7 @@ table {
 
 th,
 td {
-  border: 1px solid #333;
+  border: 1px solid #333; /* visible borders */
   padding: 8px 12px;
   text-align: left;
 }
@@ -62,20 +66,30 @@ th {
   color: #000;
 }
 
+/* Zebra stripes for readability */
 tr:nth-child(even) {
   background-color: #f9f9f9;
 }
 
-/* Lists */
+/* ============================
+   Lists
+   ============================ */
+ul,
+ol {
+  padding-left: 1.5rem;
+  margin-bottom: 1em;
+}
+
 .vocab-list,
 .concept-list {
   list-style-type: disc;
-  padding-left: 1.5rem;
   font-size: 1.2rem;
   line-height: 1.6;
 }
 
-/* Buttons */
+/* ============================
+   Buttons
+   ============================ */
 button {
   cursor: pointer;
   font-size: 16px;
@@ -86,6 +100,7 @@ button {
   transition: background-color 0.2s ease;
 }
 
+/* Button types */
 button.primary {
   background-color: #0055cc;
   color: #fff;
@@ -93,6 +108,7 @@ button.primary {
 button.primary:hover {
   background-color: #003d99;
 }
+
 button.success {
   background-color: #28a745;
   color: #fff;
@@ -100,6 +116,7 @@ button.success {
 button.success:hover {
   background-color: #1e7e34;
 }
+
 button.danger {
   background-color: #dc3545;
   color: #fff;
@@ -108,7 +125,9 @@ button.danger:hover {
   background-color: #a71d2a;
 }
 
-/* Quiz inputs */
+/* ============================
+   Quiz styling
+   ============================ */
 .quiz-order input[type="number"] {
   width: 60px;
   padding: 6px 8px;
@@ -116,12 +135,19 @@ button.danger:hover {
   font-size: 16px;
 }
 
-.quiz,
+.quiz {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 1em;
+}
+
 .quizColumn {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  flex-wrap: wrap;
+  gap: 8px;
+  flex: 1;
+  min-width: 150px;
 }
 
 .item {
@@ -136,7 +162,7 @@ button.danger:hover {
   padding: 8px 12px;
   border: 2px dashed #333;
   border-radius: 4px;
-  min-height: 50px;
+  min-height: 40px;
   background-color: #fff;
 }
 
@@ -147,7 +173,9 @@ button.danger:hover {
   color: #111;
 }
 
-/* Links */
+/* ============================
+   Links
+   ============================ */
 a {
   color: #0055cc;
   text-decoration: none;
@@ -155,4 +183,24 @@ a {
 
 a:hover {
   text-decoration: underline;
+}
+
+/* ============================
+   Grid / layout helpers
+   ============================ */
+.unit-button-grid {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  margin-bottom: 20px;
+}
+
+.unit-content {
+  width: 100%; /* ensures all sections have the same width */
+}
+
+.navigation-buttons {
+  margin-top: 1rem;
+  display: flex;
+  gap: 10px;
 }

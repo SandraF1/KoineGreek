@@ -78,7 +78,7 @@ export default function QuizOrder() {
   };
 
   return (
-    <section className="quiz-order">
+    <section className="unit-section">
       <h2>1.8 Alphabetical ordering</h2>
       <p>Type the correct number for each Greek letter. Hint: Alpha = 1.</p>
 
