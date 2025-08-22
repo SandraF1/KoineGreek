@@ -84,7 +84,7 @@ function ConceptCheckWrapper({ unitNumber }) {
               }
               disabled={currentIndex === conceptSections.length - 1}
             >
-              Next →
+              Next → 
             </Button>
           </div>
         )}
@@ -114,6 +114,7 @@ export default function UnitPage({ unitNumber }) {
     setSelectedSection(null);
   }, [unitNumber]);
 
+  // --- Buttons for each section ---
   const buttons = [
     ...subsections.sort((a, b) => a.number - b.number),
     ...(Vocab
