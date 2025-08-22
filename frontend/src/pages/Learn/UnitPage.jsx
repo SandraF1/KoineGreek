@@ -1,5 +1,6 @@
 // src/pages/Learn/UnitPage.jsx
 import React, { useState, useEffect } from "react";
+import { Container, Row, Col, Button } from "react-bootstrap";
 
 // Wildcard imports
 const subsectionModules = import.meta.glob("./UnitSubsections/*.jsx", { eager: true });
@@ -56,32 +57,35 @@ function ConceptCheckWrapper({ unitNumber }) {
     .sort((a, b) => a.number - b.number);
 
   const [currentIndex, setCurrentIndex] = useState(0);
-  if (!conceptSections.length)
-    return <p>No concept check found for Unit {unitNumber}.</p>;
+  if (!conceptSections.length) return null;
 
   const CurrentSection = conceptSections[currentIndex].Component;
 
   return (
-    <div>
+    <div className="mt-3">
       <h3>Concept Check</h3>
       <CurrentSection key={`unit${unitNumber}-concept-${currentIndex}`} />
-      <div className="navigation-buttons">
-        <button
-          onClick={() => setCurrentIndex((i) => Math.max(i - 1, 0))}
-          disabled={currentIndex === 0}
-        >
-          ← Previous
-        </button>
-        <button
-          onClick={() =>
-            setCurrentIndex((i) => Math.min(i + 1, conceptSections.length - 1))
-          }
-          disabled={currentIndex === conceptSections.length - 1}
-        >
-          Next →
-        </button>
-      </div>
-      <p>
+      {conceptSections.length > 1 && (
+        <div className="d-flex justify-content-between mt-2">
+          <Button
+            variant="secondary"
+            onClick={() => setCurrentIndex((i) => Math.max(i - 1, 0))}
+            disabled={currentIndex === 0}
+          >
+            ← Previous
+          </Button>
+          <Button
+            variant="secondary"
+            onClick={() =>
+              setCurrentIndex((i) => Math.min(i + 1, conceptSections.length - 1))
+            }
+            disabled={currentIndex === conceptSections.length - 1}
+          >
+            Next →
+          </Button>
+        </div>
+      )}
+      <p className="mt-2">
         Section {currentIndex + 1} of {conceptSections.length}:{" "}
         {conceptSections[currentIndex].name}
       </p>
@@ -108,7 +112,7 @@ export default function UnitPage({ unitNumber }) {
     setSelectedSection(null);
   }, [unitNumber]);
 
-  // Combine all sections for buttons
+  // Combine all sections for buttons dynamically
   const buttons = [
     ...subsections.sort((a, b) => a.number - b.number),
     ...(Vocab
@@ -121,41 +125,50 @@ export default function UnitPage({ unitNumber }) {
           },
         ]
       : []),
-    {
-      key: "ConceptCheck",
-      number: 1000,
-      name: "Concept Check",
-      Component: () => <ConceptCheckWrapper unitNumber={unitNumber} />,
-    },
+    ...(Object.keys(conceptModules).some((path) =>
+      getName(path).startsWith(`Unit${unitNumber}_`)
+    )
+      ? [
+          {
+            key: "ConceptCheck",
+            number: 1000,
+            name: "Concept Check",
+            Component: () => <ConceptCheckWrapper unitNumber={unitNumber} />,
+          },
+        ]
+      : []),
   ];
 
   const renderContent = () => {
     if (!selectedSection) return null;
     const Section = selectedSection.Component;
-    return (
-      <section className="unit-section" key={`unit${unitNumber}-${selectedSection.key}`}>
-        {Section ? <Section /> : <p>Content not found.</p>}
-      </section>
-    );
+    return Section ? <Section /> : <p>Content not found.</p>;
   };
 
   return (
-    <div className="app-container">
+    <Container className="my-4">
       <h2>
         Unit {unitNumber}: {unitTitle}
       </h2>
 
-      <div className="unit-button-grid">
+      <Row className="mb-3">
         {buttons.map((btn) => (
-          <button key={btn.key} onClick={() => setSelectedSection(btn)}>
-            {btn.number < 999
-              ? `Unit ${unitNumber}.${btn.number} ${btn.name.replace(/_/g, " ")}`
-              : btn.name.replace(/_/g, " ")}
-          </button>
+          <Col xs="auto" key={btn.key} className="mb-2">
+            <Button
+              variant="primary"
+              onClick={() => setSelectedSection(btn)}
+            >
+              {btn.number < 999
+                ? `Unit ${unitNumber}.${btn.number} ${btn.name.replace(/_/g, " ")}`
+                : btn.name.replace(/_/g, " ")}
+            </Button>
+          </Col>
         ))}
-      </div>
+      </Row>
 
-      <div className="unit-content">{renderContent()}</div>
-    </div>
+      <Row>
+        <Col>{renderContent()}</Col>
+      </Row>
+    </Container>
   );
 }
