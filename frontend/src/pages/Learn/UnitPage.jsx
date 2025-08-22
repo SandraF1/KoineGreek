@@ -6,44 +6,44 @@ const subsectionModules = import.meta.glob("./UnitSubsections/*.jsx", { eager: t
 const vocabModules = import.meta.glob("./Vocab/*.jsx", { eager: true });
 const conceptModules = import.meta.glob("./ConceptCheck/*.jsx", { eager: true });
 
-// Helper: get filename without extension
+// Helper: extract filename without extension
 const getName = (path) => path.split("/").pop().replace(".jsx", "");
 
-// Build mappings
+// Build subsection mappings
 const subsectionComponents = {};
 for (let path in subsectionModules) {
-  const name = getName(path); // e.g., Unit1_1_Alphabet
+  const name = getName(path); // e.g., Unit1_2_Diphthongs
   const match = name.match(/^Unit(\d+)_(\d+)_(.+)$/);
   if (!match) continue;
-
-  const unitNumber = parseInt(match[1], 10);
-  const subsectionNumber = parseInt(match[2], 10);
-  const sectionName = match[3];
-
-  subsectionComponents[unitNumber] = subsectionComponents[unitNumber] || {};
-  subsectionComponents[unitNumber][subsectionNumber] = {
-    name: sectionName,
-    component: subsectionModules[path].default,
-  };
+  const [_, unitNumStr, subNumStr, subName] = match;
+  const unitNumber = parseInt(unitNumStr);
+  const subNumber = parseInt(subNumStr);
+  subsectionComponents[unitNumber] = subsectionComponents[unitNumber] || [];
+  subsectionComponents[unitNumber].push({
+    key: name,
+    number: subNumber,
+    name: subName,
+    Component: subsectionModules[path].default,
+  });
 }
 
-// Vocabulary mapping
+// Vocab mapping
 const vocabComponents = {};
 for (let path in vocabModules) {
-  const name = getName(path); // e.g., Unit1Vocab
-  const match = name.match(/^Unit(\d+)Vocab$/);
+  const name = getName(path);
+  const match = name.match(/^Unit(\d+)_Vocab$/);
   if (!match) continue;
-  const unitNumber = parseInt(match[1], 10);
+  const unitNumber = parseInt(match[1]);
   vocabComponents[unitNumber] = vocabModules[path].default;
 }
 
-// Concept Check mapping
+// Concept check mapping
 const conceptCheckComponents = {};
 for (let path in conceptModules) {
-  const name = getName(path); // e.g., Unit1ConceptCheck
-  const match = name.match(/^Unit(\d+)ConceptCheck$/);
+  const name = getName(path);
+  const match = name.match(/^Unit(\d+)_ConceptCheck$/);
   if (!match) continue;
-  const unitNumber = parseInt(match[1], 10);
+  const unitNumber = parseInt(match[1]);
   conceptCheckComponents[unitNumber] = conceptModules[path].default;
 }
 
@@ -57,25 +57,22 @@ const unitTitles = {
 export default function UnitPage({ unitNumber }) {
   const [selectedSection, setSelectedSection] = useState(null);
 
-  const subsections = subsectionComponents[unitNumber] || {};
+  const subsections = subsectionComponents[unitNumber] || [];
   const Vocab = vocabComponents[unitNumber] || null;
   const ConceptCheck = conceptCheckComponents[unitNumber] || null;
   const unitTitle = unitTitles[unitNumber] || `Unit ${unitNumber}`;
 
+  // Combine all buttons: subsections first, then vocab/concept
+  const buttons = [
+    ...subsections.sort((a, b) => a.number - b.number),
+    ...(Vocab ? [{ key: "Vocabulary", number: 999, name: "Vocabulary", Component: Vocab }] : []),
+    ...(ConceptCheck ? [{ key: "ConceptCheck", number: 1000, name: "Concept Check", Component: ConceptCheck }] : []),
+  ];
+
   const renderContent = () => {
     if (!selectedSection) return null;
-
-    // Subsection content
-    if (subsections[selectedSection]) {
-      const Section = subsections[selectedSection].component;
-      return <Section />;
-    }
-
-    // Vocabulary & Concept Check
-    if (selectedSection === "Vocabulary" && Vocab) return <Vocab />;
-    if (selectedSection === "Concept Check" && ConceptCheck) return <ConceptCheck />;
-
-    return <p>Content not found.</p>;
+    const Section = selectedSection.Component;
+    return Section ? <Section /> : <p>Content not found.</p>;
   };
 
   return (
@@ -92,28 +89,20 @@ export default function UnitPage({ unitNumber }) {
           marginBottom: "20px",
         }}
       >
-        {/* Subsection buttons sorted by subsection number */}
-        {Object.entries(subsections)
-          .sort(([a], [b]) => a - b)
-          .map(([num, { name }]) => (
-            <button key={num} onClick={() => setSelectedSection(num)}>
-              Unit{unitNumber}.{num} {name}
-            </button>
-          ))}
-
-        {/* Vocabulary & Concept Check buttons */}
-        {Vocab && (
-          <button onClick={() => setSelectedSection("Vocabulary")}>Vocabulary</button>
-        )}
-        {ConceptCheck && (
-          <button onClick={() => setSelectedSection("Concept Check")}>Concept Check</button>
-        )}
+        {buttons.map((btn) => (
+          <button key={btn.key} onClick={() => setSelectedSection(btn)}>
+            {btn.number < 999
+              ? `Unit ${unitNumber}.${btn.number} ${btn.name.replace(/_/g, " ")}`
+              : btn.name.replace(/_/g, " ")}
+          </button>
+        ))}
       </div>
 
       {renderContent()}
     </div>
   );
 }
+
 
 
 /* Subsections: Unit<number><SectionName>.jsx
