@@ -1,5 +1,6 @@
 export default function Unit1Subsection1() {
   return (
+    <div className="app-container">
     <section>
       <h2>1.2 Diphthongs</h2>
       <p>
@@ -57,5 +58,6 @@ export default function Unit1Subsection1() {
       </p>
       <p>προϊστάμενος</p>
     </section>
+    </div>
   );
 }

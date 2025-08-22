@@ -1,5 +1,6 @@
 export default function Unit1Subsection1() {
   return (
+    <div className="app-container">
     <section>
       <h2>1.6 Accents</h2>
       <p>
@@ -46,5 +47,6 @@ export default function Unit1Subsection1() {
         </tbody>
       </table>
     </section>
+    </div>
   );
 }

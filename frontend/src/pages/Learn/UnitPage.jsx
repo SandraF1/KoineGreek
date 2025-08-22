@@ -1,18 +1,17 @@
 // src/pages/Learn/UnitPage.jsx
 import React, { useState } from "react";
 
-// --- Wildcard imports ---
+// Wildcard imports
 const subsectionModules = import.meta.glob("./UnitSubsections/*.jsx", { eager: true });
 const vocabModules = import.meta.glob("./Vocab/*.jsx", { eager: true });
 const conceptModules = import.meta.glob("./ConceptCheck/*.jsx", { eager: true });
 
-// Helper: extract filename without extension
 const getName = (path) => path.split("/").pop().replace(".jsx", "");
 
-// --- Subsections ---
+// Subsections
 const subsectionComponents = {};
 for (let path in subsectionModules) {
-  const name = getName(path); // e.g., Unit1_2_Diphthongs
+  const name = getName(path);
   const match = name.match(/^Unit(\d+)_(\d+)_(.+)$/);
   if (!match) continue;
   const [_, unitNumStr, subNumStr, subName] = match;
@@ -27,7 +26,7 @@ for (let path in subsectionModules) {
   });
 }
 
-// --- Vocab ---
+// Vocab
 const vocabComponents = {};
 for (let path in vocabModules) {
   const name = getName(path);
@@ -37,9 +36,8 @@ for (let path in vocabModules) {
   vocabComponents[unitNumber] = vocabModules[path].default;
 }
 
-// --- ConceptCheck Wrapper ---
+// ConceptCheck wrapper
 function ConceptCheckWrapper({ unitNumber }) {
-  // Filter all concept check modules for this unit
   const subsections = Object.keys(conceptModules)
     .map((path) => {
       const name = getName(path);
@@ -56,20 +54,25 @@ function ConceptCheckWrapper({ unitNumber }) {
     .filter(Boolean)
     .sort((a, b) => a.number - b.number);
 
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentIndex, setCurrentIndex] = React.useState(0);
   if (!subsections.length) return <p>No concept check found for Unit {unitNumber}.</p>;
 
   const CurrentSection = subsections[currentIndex].Component;
 
   return (
-    <div>
+    <div className="unit-section">
       <h3>Concept Check</h3>
       <CurrentSection />
       <div style={{ marginTop: "1rem" }}>
-        <button onClick={() => setCurrentIndex((i) => Math.max(i - 1, 0))} disabled={currentIndex === 0}>
+        <button
+          className="primary"
+          onClick={() => setCurrentIndex((i) => Math.max(i - 1, 0))}
+          disabled={currentIndex === 0}
+        >
           ← Previous
         </button>{" "}
         <button
+          className="primary"
           onClick={() => setCurrentIndex((i) => Math.min(i + 1, subsections.length - 1))}
           disabled={currentIndex === subsections.length - 1}
         >
@@ -83,7 +86,7 @@ function ConceptCheckWrapper({ unitNumber }) {
   );
 }
 
-// --- Unit Titles (Optional) ---
+// Unit titles
 const unitTitles = {
   1: "Introduction to Greek",
   2: "Basic Reading",
@@ -97,7 +100,6 @@ export default function UnitPage({ unitNumber }) {
   const Vocab = vocabComponents[unitNumber] || null;
   const unitTitle = unitTitles[unitNumber] || `Unit ${unitNumber}`;
 
-  // Combine buttons: subsections first, then vocab, then concept check
   const buttons = [
     ...subsections.sort((a, b) => a.number - b.number),
     ...(Vocab ? [{ key: "Vocabulary", number: 999, name: "Vocabulary", Component: Vocab }] : []),
@@ -107,11 +109,11 @@ export default function UnitPage({ unitNumber }) {
   const renderContent = () => {
     if (!selectedSection) return null;
     const Section = selectedSection.Component;
-    return Section ? <Section /> : <p>Content not found.</p>;
+    return <div className="unit-section">{Section && <Section />}</div>;
   };
 
   return (
-    <div>
+    <div className="app-container">
       <h2>
         Unit {unitNumber}: {unitTitle}
       </h2>
@@ -125,7 +127,7 @@ export default function UnitPage({ unitNumber }) {
         }}
       >
         {buttons.map((btn) => (
-          <button key={btn.key} onClick={() => setSelectedSection(btn)}>
+          <button key={btn.key} className="primary" onClick={() => setSelectedSection(btn)}>
             {btn.number < 999
               ? `Unit ${unitNumber}.${btn.number} ${btn.name.replace(/_/g, " ")}`
               : btn.name.replace(/_/g, " ")}

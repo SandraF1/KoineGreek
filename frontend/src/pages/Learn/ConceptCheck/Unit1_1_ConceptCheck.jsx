@@ -83,7 +83,9 @@ export default function Unit1_ConceptCheck() {
 
       {questions.map((q, i) => (
         <div key={i} style={{ marginBottom: "20px" }}>
-          <div style={{ fontSize: "24px", marginBottom: "8px" }}>{q.letter}</div>
+          <div style={{ fontSize: "24px", marginBottom: "8px" }}>
+            {q.letter}
+          </div>
           {q.options.map((opt) => (
             <label key={opt} style={{ display: "block", cursor: "pointer" }}>
               <input
