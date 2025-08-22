@@ -1,206 +1,108 @@
-/* ============================
-   Global styles for the website
-   ============================ */
+/* =======================
+   Base styles
+   ======================= */
 
-/* Base body */
+html {
+  font-size: 24px; /* default is 16px, increase for bigger text everywhere */
+}
+
 body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 16px; /* Base font size for readable text */
+  line-height: 1.6; /* Comfortable spacing */
+  color: #333;
+  background-color: #f9f9f9;
   margin: 0;
   padding: 0;
-  font-family: Arial, sans-serif;
-  font-size: 18px;
-  line-height: 1.6;
-  color: #111; /* high contrast text */
-  background-color: #ffffff; /* white background */
 }
 
-/* ============================
-   Containers
-   ============================ */
-.app-container {
-  max-width: 900px; /* consistent width for all content */
-  margin: 0 auto;
-  padding: 20px;
-}
-
-.unit-section {
-  padding: 1.5rem;
-  min-height: 400px; /* prevents vertical jump */
-  margin-bottom: 2rem;
-}
-
-/* ============================
+/* =======================
    Headings
-   ============================ */
-h1,
-h2,
-h3,
+   ======================= */
+h1 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+h2 {
+  font-size: 1.75rem;
+  margin-bottom: 0.9rem;
+}
+h3 {
+  font-size: 1.5rem;
+  margin-bottom: 0.8rem;
+}
 h4 {
-  color: #111;
-  margin-bottom: 0.5em;
+  font-size: 1.25rem;
+  margin-bottom: 0.7rem;
+}
+h5 {
+  font-size: 1rem;
+  margin-bottom: 0.6rem;
+}
+h6 {
+  font-size: 0.875rem;
+  margin-bottom: 0.5rem;
 }
 
-/* Paragraphs */
-p {
-  margin-bottom: 1em;
-}
-
-/* ============================
-   Tables
-   ============================ */
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 1em 0;
-  table-layout: fixed;
-}
-
-th,
-td {
-  border: 1px solid #333; /* visible borders */
-  padding: 8px 12px;
-  text-align: left;
-}
-
-th {
-  background-color: #e0e0e0;
-  color: #000;
-}
-
-/* Zebra stripes for readability */
-tr:nth-child(even) {
-  background-color: #f9f9f9;
-}
-
-/* ============================
-   Lists
-   ============================ */
-ul,
-ol {
-  padding-left: 1.5rem;
-  margin-bottom: 1em;
-}
-
-.vocab-list,
-.concept-list {
-  list-style-type: disc;
-  font-size: 1.2rem;
+/* =======================
+   Paragraphs, links, lists
+   ======================= */
+p,
+li,
+span,
+a {
+  font-size: 1rem; /* Normal readable text */
   line-height: 1.6;
 }
 
-/* ============================
+/* =======================
    Buttons
-   ============================ */
-button {
-  cursor: pointer;
-  font-size: 16px;
-  padding: 8px 16px;
-  margin: 4px 4px 12px 0;
-  border: none;
-  border-radius: 4px;
-  transition: background-color 0.2s ease;
+   ======================= */
+button,
+.btn {
+  font-size: 1rem; /* match normal text */
+  padding: 0.5rem 1rem;
 }
 
-/* Button types */
-button.primary {
-  background-color: #0055cc;
-  color: #fff;
+/* =======================
+   Navbar
+   ======================= */
+.navbar {
+  background-color: #007bff;
+  color: white;
 }
-button.primary:hover {
-  background-color: #003d99;
-}
-
-button.success {
-  background-color: #28a745;
-  color: #fff;
-}
-button.success:hover {
-  background-color: #1e7e34;
-}
-
-button.danger {
-  background-color: #dc3545;
-  color: #fff;
-}
-button.danger:hover {
-  background-color: #a71d2a;
-}
-
-/* ============================
-   Quiz styling
-   ============================ */
-.quiz-order input[type="number"] {
-  width: 60px;
-  padding: 6px 8px;
-  margin-left: 8px;
-  font-size: 16px;
-}
-
-.quiz {
-  display: flex;
-  gap: 20px;
-  flex-wrap: wrap;
-  margin-bottom: 1em;
-}
-
-.quizColumn {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  flex: 1;
-  min-width: 150px;
-}
-
-.item {
-  padding: 8px 12px;
-  border: 1px solid #333;
-  border-radius: 4px;
-  background-color: #f0f0f0;
-  cursor: grab;
-}
-
-.drop-zone {
-  padding: 8px 12px;
-  border: 2px dashed #333;
-  border-radius: 4px;
-  min-height: 40px;
-  background-color: #fff;
-}
-
-/* Live result text */
-[aria-live="polite"] {
-  margin-top: 1em;
-  font-weight: bold;
-  color: #111;
-}
-
-/* ============================
-   Links
-   ============================ */
-a {
-  color: #0055cc;
+.navbar a {
+  color: white;
   text-decoration: none;
+  margin-right: 1rem;
 }
-
-a:hover {
+.navbar a:hover {
   text-decoration: underline;
 }
 
-/* ============================
-   Grid / layout helpers
-   ============================ */
-.unit-button-grid {
-  display: grid;
-  gap: 10px;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  margin-bottom: 20px;
+/* =======================
+   Footer
+   ======================= */
+.footer {
+  background-color: #343a40;
+  color: white;
+  padding: 1rem;
+  text-align: center;
 }
 
-.unit-content {
-  width: 100%; /* ensures all sections have the same width */
+/* =======================
+   Page content spacing
+   ======================= */
+.app-content {
+  padding: 2rem;
 }
 
-.navigation-buttons {
-  margin-top: 1rem;
-  display: flex;
-  gap: 10px;
+/* =======================
+   Utility (optional)
+   ======================= */
+.text-center {
+  text-align: center;
+}
+.text-muted {
+  color: #6c757d;
 }

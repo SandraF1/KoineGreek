@@ -1,6 +1,6 @@
 // src/pages/Learn/UnitPage.jsx
 import React, { useState, useEffect } from "react";
-import { Container, Row, Col, Button } from "react-bootstrap";
+import { Container, Row, Col, Button, Card } from "react-bootstrap";
 
 // Wildcard imports
 const subsectionModules = import.meta.glob("./UnitSubsections/*.jsx", { eager: true });
@@ -13,7 +13,7 @@ const getName = (path) => path.split("/").pop().replace(".jsx", "");
 // --- Subsections ---
 const subsectionComponents = {};
 for (let path in subsectionModules) {
-  const name = getName(path); // e.g., Unit1_1_Alphabet
+  const name = getName(path);
   const match = name.match(/^Unit(\d+)_(\d+)_(.+)$/);
   if (!match) continue;
   const [_, unitNumStr, subNumStr, subName] = match;
@@ -62,34 +62,37 @@ function ConceptCheckWrapper({ unitNumber }) {
   const CurrentSection = conceptSections[currentIndex].Component;
 
   return (
-    <div className="mt-3">
-      <h3>Concept Check</h3>
-      <CurrentSection key={`unit${unitNumber}-concept-${currentIndex}`} />
-      {conceptSections.length > 1 && (
-        <div className="d-flex justify-content-between mt-2">
-          <Button
-            variant="secondary"
-            onClick={() => setCurrentIndex((i) => Math.max(i - 1, 0))}
-            disabled={currentIndex === 0}
-          >
-            ← Previous
-          </Button>
-          <Button
-            variant="secondary"
-            onClick={() =>
-              setCurrentIndex((i) => Math.min(i + 1, conceptSections.length - 1))
-            }
-            disabled={currentIndex === conceptSections.length - 1}
-          >
-            Next →
-          </Button>
-        </div>
-      )}
-      <p className="mt-2">
-        Section {currentIndex + 1} of {conceptSections.length}:{" "}
-        {conceptSections[currentIndex].name}
-      </p>
-    </div>
+    <Card className="mt-4 p-3 shadow-sm border-0">
+      <Card.Body>
+        <Card.Title className="h4 mb-3">Concept Check</Card.Title>
+        <CurrentSection key={`unit${unitNumber}-concept-${currentIndex}`} />
+        {conceptSections.length > 1 && (
+          <div className="d-flex justify-content-between mt-3">
+            <Button
+              variant="outline-secondary"
+              size="sm"
+              onClick={() => setCurrentIndex((i) => Math.max(i - 1, 0))}
+              disabled={currentIndex === 0}
+            >
+              ← Previous
+            </Button>
+            <Button
+              variant="outline-secondary"
+              size="sm"
+              onClick={() =>
+                setCurrentIndex((i) => Math.min(i + 1, conceptSections.length - 1))
+              }
+              disabled={currentIndex === conceptSections.length - 1}
+            >
+              Next →
+            </Button>
+          </div>
+        )}
+        <p className="mt-2 text-muted small">
+          Section {currentIndex + 1} of {conceptSections.length}: {conceptSections[currentIndex].name}
+        </p>
+      </Card.Body>
+    </Card>
   );
 }
 
@@ -107,12 +110,10 @@ export default function UnitPage({ unitNumber }) {
   const Vocab = vocabComponents[unitNumber] || null;
   const unitTitle = unitTitles[unitNumber] || `Unit ${unitNumber}`;
 
-  // Reset selection on unit change
   useEffect(() => {
     setSelectedSection(null);
   }, [unitNumber]);
 
-  // Combine all sections for buttons dynamically
   const buttons = [
     ...subsections.sort((a, b) => a.number - b.number),
     ...(Vocab
@@ -142,20 +143,25 @@ export default function UnitPage({ unitNumber }) {
   const renderContent = () => {
     if (!selectedSection) return null;
     const Section = selectedSection.Component;
-    return Section ? <Section /> : <p>Content not found.</p>;
+    return Section ? (
+      <Card className="mt-4 p-3 shadow-sm border-0">
+        <Card.Body>{<Section />}</Card.Body>
+      </Card>
+    ) : (
+      <p>Content not found.</p>
+    );
   };
 
   return (
-    <Container className="my-4">
-      <h2>
-        Unit {unitNumber}: {unitTitle}
-      </h2>
+    <Container className="my-5">
+      <h2 className="mb-4 display-6">{`Unit ${unitNumber}: ${unitTitle}`}</h2>
 
-      <Row className="mb-3">
+      <Row className="g-2 mb-4">
         {buttons.map((btn) => (
-          <Col xs="auto" key={btn.key} className="mb-2">
+          <Col xs="auto" key={btn.key}>
             <Button
               variant="primary"
+              size="lg"
               onClick={() => setSelectedSection(btn)}
             >
               {btn.number < 999
@@ -166,9 +172,7 @@ export default function UnitPage({ unitNumber }) {
         ))}
       </Row>
 
-      <Row>
-        <Col>{renderContent()}</Col>
-      </Row>
+      {renderContent()}
     </Container>
   );
 }
