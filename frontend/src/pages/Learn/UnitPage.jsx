@@ -9,7 +9,7 @@ const conceptModules = import.meta.glob("./ConceptCheck/*.jsx", { eager: true })
 // Helper: extract filename without extension
 const getName = (path) => path.split("/").pop().replace(".jsx", "");
 
-// Build subsection mappings
+// --- Subsections ---
 const subsectionComponents = {};
 for (let path in subsectionModules) {
   const name = getName(path); // e.g., Unit1_2_Diphthongs
@@ -27,7 +27,7 @@ for (let path in subsectionModules) {
   });
 }
 
-// Vocab mapping
+// --- Vocab ---
 const vocabComponents = {};
 for (let path in vocabModules) {
   const name = getName(path);
@@ -37,17 +37,53 @@ for (let path in vocabModules) {
   vocabComponents[unitNumber] = vocabModules[path].default;
 }
 
-// Concept check mapping
-const conceptCheckComponents = {};
-for (let path in conceptModules) {
-  const name = getName(path);
-  const match = name.match(/^Unit(\d+)_ConceptCheck$/);
-  if (!match) continue;
-  const unitNumber = parseInt(match[1]);
-  conceptCheckComponents[unitNumber] = conceptModules[path].default;
+// --- ConceptCheck Wrapper ---
+function ConceptCheckWrapper({ unitNumber }) {
+  // Filter all concept check modules for this unit
+  const subsections = Object.keys(conceptModules)
+    .map((path) => {
+      const name = getName(path);
+      const match = name.match(new RegExp(`Unit${unitNumber}_(\\d+)_ConceptCheck`));
+      if (!match) return null;
+      const Component = conceptModules[path].default;
+      return {
+        key: name,
+        number: parseInt(match[1]),
+        name: `Concept ${match[1]}`,
+        Component,
+      };
+    })
+    .filter(Boolean)
+    .sort((a, b) => a.number - b.number);
+
+  const [currentIndex, setCurrentIndex] = useState(0);
+  if (!subsections.length) return <p>No concept check found for Unit {unitNumber}.</p>;
+
+  const CurrentSection = subsections[currentIndex].Component;
+
+  return (
+    <div>
+      <h3>Concept Check</h3>
+      <CurrentSection />
+      <div style={{ marginTop: "1rem" }}>
+        <button onClick={() => setCurrentIndex((i) => Math.max(i - 1, 0))} disabled={currentIndex === 0}>
+          ← Previous
+        </button>{" "}
+        <button
+          onClick={() => setCurrentIndex((i) => Math.min(i + 1, subsections.length - 1))}
+          disabled={currentIndex === subsections.length - 1}
+        >
+          Next →
+        </button>
+      </div>
+      <p>
+        Section {currentIndex + 1} of {subsections.length}: {subsections[currentIndex].name}
+      </p>
+    </div>
+  );
 }
 
-// Optional: unit titles
+// --- Unit Titles (Optional) ---
 const unitTitles = {
   1: "Introduction to Greek",
   2: "Basic Reading",
@@ -59,14 +95,13 @@ export default function UnitPage({ unitNumber }) {
 
   const subsections = subsectionComponents[unitNumber] || [];
   const Vocab = vocabComponents[unitNumber] || null;
-  const ConceptCheck = conceptCheckComponents[unitNumber] || null;
   const unitTitle = unitTitles[unitNumber] || `Unit ${unitNumber}`;
 
-  // Combine all buttons: subsections first, then vocab/concept
+  // Combine buttons: subsections first, then vocab, then concept check
   const buttons = [
     ...subsections.sort((a, b) => a.number - b.number),
     ...(Vocab ? [{ key: "Vocabulary", number: 999, name: "Vocabulary", Component: Vocab }] : []),
-    ...(ConceptCheck ? [{ key: "ConceptCheck", number: 1000, name: "Concept Check", Component: ConceptCheck }] : []),
+    { key: "ConceptCheck", number: 1000, name: "Concept Check", Component: () => <ConceptCheckWrapper unitNumber={unitNumber} /> },
   ];
 
   const renderContent = () => {
@@ -102,11 +137,3 @@ export default function UnitPage({ unitNumber }) {
     </div>
   );
 }
-
-
-
-/* Subsections: Unit<number><SectionName>.jsx
-
-Vocabulary: Unit<number>Vocab.jsx
-
-Concept Check: Unit<number>ConceptCheck.jsx */
