@@ -1,0 +1,64 @@
+project-root/
+├─ frontend/
+│  ├─ src/
+│  │  ├─ components/
+│  │  │  ├─ Flashcards/
+│  │  │  │  ├─ Flashcard.jsx
+│  │  │  │  └─ FlashcardList.jsx
+│  │  │  ├─ QuizBank/
+│  │  │  │  └─ QuizFlashcards.jsx
+│  │  │  ├─ GrammarParser/
+│  │  │  │  └─ GrammarParser.jsx
+│  │  │  └─ Footer.jsx
+│  │  ├─ pages/
+│  │  │  ├─ Home.jsx
+│  │  │  ├─ About.jsx
+│  │  │  ├─ Terms.jsx
+│  │  │  ├─ Contact.jsx
+│  │  │  ├─ Learn/
+│  │  │  │  ├─ Learn.jsx
+│  │  │  │  ├─ UnitPage.jsx
+│  │  │  │  ├─ ConceptCheck.jsx
+│  │  │  │  ├─ UnitVocab.jsx
+│  │  │  │  └─ UnitSubsections/
+│  │  │  │     ├─ Unit1Subsection1.jsx
+│  │  │  │     ├─ Unit1Subsection2.jsx
+│  │  │  │     └─ ...
+│  │  ├─ App.jsx
+│  │  └─ index.jsx
+│  └─ package.json
+└─ backend/
+   ├─ db/
+   │  ├─ grammar.db
+   │  └─ quiz.db
+   ├─ server.js
+   └─ package.json
+
+
+UPDATED
+
+src/
+├─ components/
+│  ├─ Flashcards/
+│  │  └─ Flashcard.jsx
+│  ├─ GrammarParser/
+│  │  └─ GrammarParser.jsx
+│  ├─ QuizBank/
+│  │  └─ QuizFlashcards.jsx
+│  └─ ConceptCheck/
+│     └─ ConceptCheck.jsx
+├─ pages/
+│  ├─ Home.jsx
+│  ├─ About.jsx
+│  ├─ Terms.jsx
+│  ├─ Contact.jsx
+│  ├─ Learn/
+│  │  ├─ Learn.jsx
+│  │  ├─ UnitPage.jsx
+│  │  ├─ UnitVocab.jsx          // unit vocab list per unit
+│  │  ├─ ConceptCheckPage.jsx   // unit-specific concept check
+│  │  └─ UnitSubsections/
+│  │     ├─ Unit1Subsection1.jsx
+│  │     ├─ Unit1Subsection2.jsx
+│  │     └─ Unit2Subsection1.jsx
+└─ App.jsx
