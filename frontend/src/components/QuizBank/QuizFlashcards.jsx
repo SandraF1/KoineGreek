@@ -1,26 +1,33 @@
 import React, { useEffect, useState } from "react";
 
-export default function QuizFlashcards({ unitId }) {
+export default function QuizFlashcards({ unitIds }) {
   const [questions, setQuestions] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (!unitId) return; // only fetch if unitId is provided
-    fetch(`http://localhost:5000/api/quiz/${unitId}`)
-      .then((res) => res.json())
+    if (!unitIds || unitIds.length === 0) {
+      setQuestions([]);
+      return;
+    }
+    setLoading(true);
+
+    Promise.all(
+      unitIds.map((id) =>
+        fetch(`http://localhost:5000/api/quiz/${id}`).then((res) => res.json())
+      )
+    )
       .then((data) => {
-        setQuestions(data);
+        setQuestions(data.flat());
         setLoading(false);
       })
       .catch((err) => {
         console.error("Error fetching quiz:", err);
         setLoading(false);
       });
-  }, [unitId]);
+  }, [unitIds]);
 
-  if (!unitId) return <p>Select a unit to see the quiz flashcards.</p>;
   if (loading) return <p>Loading quiz questions...</p>;
-  if (!questions.length) return <p>No quiz questions found for this unit.</p>;
+  if (!questions.length) return <p>No quiz questions found for selected units.</p>;
 
   return (
     <div>

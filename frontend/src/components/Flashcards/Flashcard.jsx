@@ -3,7 +3,7 @@ import React, { useState } from "react";
 export default function Flashcard({ card }) {
   const [flipped, setFlipped] = useState(false);
 
-  if (!card) return null; // prevents undefined errors
+  if (!card) return null;
 
   return (
     <div
@@ -14,6 +14,8 @@ export default function Flashcard({ card }) {
         margin: 8,
         cursor: "pointer",
         width: 200,
+        borderRadius: 5,
+        backgroundColor: "#f9f9f9",
       }}
     >
       {flipped ? (

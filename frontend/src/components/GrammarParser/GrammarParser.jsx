@@ -1,24 +1,34 @@
 import React, { useEffect, useState } from "react";
 
-export default function GrammarParser() {
+export default function GrammarParser({ unitIds }) {
   const [rules, setRules] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/grammar")
-      .then((res) => res.json())
+    if (!unitIds || unitIds.length === 0) {
+      setRules([]);
+      return;
+    }
+    setLoading(true);
+
+    Promise.all(
+      unitIds.map((id) =>
+        fetch(`http://localhost:5000/api/grammar/${id}`).then((res) => res.json())
+      )
+    )
       .then((data) => {
-        setRules(data);
+        // Flatten the arrays of rules from multiple units
+        setRules(data.flat());
         setLoading(false);
       })
       .catch((err) => {
         console.error("Error fetching grammar:", err);
         setLoading(false);
       });
-  }, []);
+  }, [unitIds]);
 
   if (loading) return <p>Loading grammar rules...</p>;
-  if (!rules.length) return <p>No grammar rules found.</p>;
+  if (!rules.length) return <p>No grammar rules found for selected units.</p>;
 
   return (
     <div>
