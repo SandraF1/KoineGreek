@@ -10,7 +10,7 @@ import { unit2Flashcards } from "../../components/Flashcards/DummyCards";
 export default function Learn() {
   const [activeSection, setActiveSection] = useState(null); // "lesson", "vocab", "grammar", "quiz"
   const [selectedUnit, setSelectedUnit] = useState(null); // for lesson content
-  const [selectedUnits, setSelectedUnits] = useState([]);   // for multi-unit sections
+  const [selectedUnits, setSelectedUnits] = useState([]); // for multi-unit sections
 
   const allUnits = [
     { id: 1, name: "Unit 1", hasContent: true },
@@ -84,7 +84,11 @@ export default function Learn() {
         sortedUnits.map((unit) => (
           <div key={unit} style={{ marginTop: 20 }}>
             <h3>Unit {unit} Vocabulary Flashcards</h3>
-            {unit === 2 ? <FlashcardList cards={unit2Flashcards} /> : <p>No cards yet.</p>}
+            {unit === 2 ? (
+              <FlashcardList cards={unit2Flashcards} />
+            ) : (
+              <p>No cards yet.</p>
+            )}
           </div>
         ))}
 
@@ -92,7 +96,7 @@ export default function Learn() {
         sortedUnits.map((unit) => (
           <div key={unit} style={{ marginTop: 20 }}>
             <h3>Unit {unit} Grammar Parser</h3>
-            <GrammarParser />
+            <GrammarParser unit={unit} /> {/* ✅ Pass unit here */}
           </div>
         ))}
 

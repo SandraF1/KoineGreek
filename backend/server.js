@@ -1,31 +1,28 @@
+// server.js
 const express = require("express");
 const sqlite3 = require("sqlite3").verbose();
 const cors = require("cors");
-const app = express();
 
+const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Grammar parser db
+// Connect to grammar.db
 const grammarDB = new sqlite3.Database("./db/grammar.db");
-// Quiz bank db
-const quizDB = new sqlite3.Database("./db/quiz.db");
 
-// Example grammar parser endpoint
+// Fetch random grammar item for a unit
 app.get("/api/grammar", (req, res) => {
-  grammarDB.all("SELECT * FROM Grammar", (err, rows) => {
-    if (err) return res.status(500).json({ error: err.message });
-    res.json(rows);
-  });
-});
+  const unit = parseInt(req.query.unit, 10);
 
-// Example quiz bank endpoint
-app.get("/api/quiz/:unitId", (req, res) => {
-  const { unitId } = req.params;
-  quizDB.all("SELECT * FROM Quiz WHERE unit = ?", [unitId], (err, rows) => {
-    if (err) return res.status(500).json({ error: err.message });
-    res.json(rows);
-  });
+  grammarDB.all(
+    "SELECT * FROM Grammar WHERE unit = ?",
+    [unit],
+    (err, rows) => {
+      if (err) return res.status(500).json({ error: err.message });
+      if (!rows || rows.length === 0) return res.json([]); // return empty array
+      res.json(rows); // send all rows, frontend will randomize
+    }
+  );
 });
 
 app.listen(5000, () => console.log("Backend running on http://localhost:5000"));
