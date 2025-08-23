@@ -1,23 +1,54 @@
 // src/components/Flashcards/dummyCards.js
+
 export const unit2Flashcards = [
   {
-    word: "Ecosystem",
-    definition: "A biological community of interacting organisms and their environment.",
-    example: "The rainforest ecosystem is home to thousands of species.",
+    word: "ἀρχή",
+    definition: "beginning",
+    example: "ἡ ἀρχή τοῦ κόσμου. (the beginning of the world)",
   },
   {
-    word: "Photosynthesis",
-    definition: "The process by which green plants use sunlight to make food from carbon dioxide and water.",
-    example: "Plants perform photosynthesis to produce oxygen and glucose.",
+    word: "φωνή",
+    definition: "voice",
+    example: "ἡ φωνή τοῦ διδασκάλου. (the voice of the teacher)",
   },
   {
-    word: "Gravity",
-    definition: "The force that attracts objects toward the center of the Earth.",
-    example: "Gravity keeps us grounded on the Earth.",
+    word: "ἀγάπη",
+    definition: "love (especially divine love)",
+    example: "ἡ ἀγάπη τοῦ θεοῦ. (the love of God)",
   },
   {
-    word: "Osmosis",
-    definition: "The movement of water molecules from a region of low solute concentration to high solute concentration through a semi-permeable membrane.",
-    example: "Plant roots absorb water through osmosis.",
+    word: "χώρα",
+    definition: "land, country",
+    example: "ἡ χώρα εἶναι μεγάλη. (the land is large)",
+  },
+  {
+    word: "δόξα",
+    definition: "glory",
+    example: "ἡ δόξα τοῦ θεοῦ. (the glory of God)",
+  },
+  {
+    word: "σοφία",
+    definition: "wisdom",
+    example: "ἡ σοφία τῶν φιλοσόφων. (the wisdom of the philosophers)",
+  },
+  {
+    word: "τιμή",
+    definition: "honor",
+    example: "ἡ τιμή τοῦ ἀνδρός. (the honor of the man)",
+  },
+  {
+    word: "ψυχή",
+    definition: "soul",
+    example: "ἡ ψυχή ἐστὶν ἀθάνατος. (the soul is immortal)",
+  },
+  {
+    word: "μάχη",
+    definition: "battle",
+    example: "ἡ μάχη ἐν τῇ πόλει. (the battle in the city)",
+  },
+  {
+    word: "γραφή",
+    definition: "writing, scripture",
+    example: "ἡ γραφή τῆς ἐκκλησίας. (the scripture of the church)",
   },
 ];

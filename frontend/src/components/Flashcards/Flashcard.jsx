@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "../../styles/global.css";
 
 export default function Flashcard({ card }) {
   const [flipped, setFlipped] = useState(false);
