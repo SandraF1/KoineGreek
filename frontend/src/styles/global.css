@@ -106,3 +106,35 @@ button,
 .text-muted {
   color: #6c757d;
 }
+
+/* Section buttons container */
+.section-buttons {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+/* Default button style */
+.section-buttons button {
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background-color: #f9f9f9;
+  color: black;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+/* Active/selected button style */
+.section-buttons button.active {
+  border: 2px solid #007bff;
+  background-color: #007bff;
+  color: white;
+}
+
+/* Active section button highlight */
+button.active-section-btn {
+  background-color: #007bff;
+  color: white;
+  border: 2px solid #0056b3;
+}

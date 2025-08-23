@@ -1,3 +1,4 @@
+// src/pages/Learn/Learn.jsx
 import React, { useState } from "react";
 import UnitPage from "./UnitPage";
 import UnitSelector from "../../components/UnitSelector";
@@ -8,9 +9,10 @@ import { unit2Flashcards } from "../../components/Flashcards/DummyCards";
 
 export default function Learn() {
   const [activeSection, setActiveSection] = useState(null); // "lesson", "vocab", "grammar", "quiz"
-  const [selectedUnits, setSelectedUnits] = useState([]);
+  const [selectedUnit, setSelectedUnit] = useState(null); // for lesson content
+  const [selectedUnits, setSelectedUnits] = useState([]);   // for multi-unit sections
 
-  const units = [
+  const allUnits = [
     { id: 1, name: "Unit 1", hasContent: true },
     { id: 2, name: "Unit 2", hasContent: true },
     { id: 3, name: "Unit 3", hasContent: true },
@@ -18,9 +20,19 @@ export default function Learn() {
 
   const handleSectionClick = (section) => {
     setActiveSection(section);
-    // Reset selected units when switching section
-    setSelectedUnits([]);
+
+    // reset selections appropriately
+    if (section === "lesson") {
+      setSelectedUnits([]);
+      if (!selectedUnit) setSelectedUnit(1);
+    } else {
+      setSelectedUnit(null);
+      if (selectedUnits.length === 0) setSelectedUnits([1]);
+    }
   };
+
+  // Always sort selected units numerically
+  const sortedUnits = [...selectedUnits].sort((a, b) => a - b);
 
   return (
     <div style={{ padding: "1rem" }}>
@@ -28,60 +40,69 @@ export default function Learn() {
 
       {/* Section buttons */}
       <div style={{ display: "flex", gap: 10, marginBottom: 20 }}>
-        <button onClick={() => handleSectionClick("lesson")}>Lesson Content</button>
-        <button onClick={() => handleSectionClick("vocab")}>Vocabulary Flashcards</button>
-        <button onClick={() => handleSectionClick("grammar")}>Grammar Parser</button>
-        <button onClick={() => handleSectionClick("quiz")}>Quiz Bank</button>
+        {["lesson", "vocab", "grammar", "quiz"].map((section) => (
+          <button
+            key={section}
+            onClick={() => handleSectionClick(section)}
+            className={activeSection === section ? "active-section" : ""}
+          >
+            {section === "lesson"
+              ? "Lesson Content"
+              : section === "vocab"
+              ? "Vocabulary Flashcards"
+              : section === "grammar"
+              ? "Grammar Parser"
+              : "Quiz Bank"}
+          </button>
+        ))}
       </div>
 
       {/* Unit selector */}
-      {activeSection && (
+      {activeSection && activeSection === "lesson" && (
         <UnitSelector
-          units={units}
-          selectedUnits={selectedUnits}
-          setSelectedUnits={setSelectedUnits}
-          singleSelect={activeSection === "lesson"} // single select for lesson, multi for others
+          units={allUnits}
+          selectedUnits={selectedUnit ? [selectedUnit] : []}
+          setSelectedUnits={(arr) => setSelectedUnit(arr[0] || null)}
+          singleSelect={true}
         />
       )}
 
-      {/* Render content based on section */}
-      {activeSection === "lesson" &&
-        selectedUnits.length === 1 &&
-        <UnitPage unitNumber={selectedUnits[0]} />
-      }
-
-      {activeSection === "vocab" && selectedUnits.length > 0 && (
-        <div style={{ marginTop: 20 }}>
-          {selectedUnits.map((unit) => (
-            <div key={unit}>
-              <h3>Unit {unit} Vocabulary Flashcards</h3>
-              {unit === 2 ? <FlashcardList cards={unit2Flashcards} /> : <p>No cards yet.</p>}
-            </div>
-          ))}
-        </div>
+      {activeSection && activeSection !== "lesson" && (
+        <UnitSelector
+          units={allUnits}
+          selectedUnits={selectedUnits}
+          setSelectedUnits={setSelectedUnits}
+        />
       )}
 
-      {activeSection === "grammar" && selectedUnits.length > 0 && (
-        <div style={{ marginTop: 20 }}>
-          {selectedUnits.map((unit) => (
-            <div key={unit}>
-              <h3>Unit {unit} Grammar Parser</h3>
-              <GrammarParser />
-            </div>
-          ))}
-        </div>
+      {/* Render content */}
+      {activeSection === "lesson" && selectedUnit && (
+        <UnitPage unitNumber={selectedUnit} />
       )}
 
-      {activeSection === "quiz" && selectedUnits.length > 0 && (
-        <div style={{ marginTop: 20 }}>
-          {selectedUnits.map((unit) => (
-            <div key={unit}>
-              <h3>Unit {unit} Quiz Bank</h3>
-              <QuizFlashcards />
-            </div>
-          ))}
-        </div>
-      )}
+      {activeSection === "vocab" &&
+        sortedUnits.map((unit) => (
+          <div key={unit} style={{ marginTop: 20 }}>
+            <h3>Unit {unit} Vocabulary Flashcards</h3>
+            {unit === 2 ? <FlashcardList cards={unit2Flashcards} /> : <p>No cards yet.</p>}
+          </div>
+        ))}
+
+      {activeSection === "grammar" &&
+        sortedUnits.map((unit) => (
+          <div key={unit} style={{ marginTop: 20 }}>
+            <h3>Unit {unit} Grammar Parser</h3>
+            <GrammarParser />
+          </div>
+        ))}
+
+      {activeSection === "quiz" &&
+        sortedUnits.map((unit) => (
+          <div key={unit} style={{ marginTop: 20 }}>
+            <h3>Unit {unit} Quiz Bank</h3>
+            <QuizFlashcards />
+          </div>
+        ))}
     </div>
   );
 }
