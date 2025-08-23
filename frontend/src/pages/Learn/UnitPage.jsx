@@ -99,7 +99,7 @@ function ConceptCheckWrapper({ unitNumber }) {
 // Unit titles
 const unitTitles = {
   1: "Introduction to Greek",
-  2: "Basic Reading",
+  2: "First declension nouns",
   3: "Dialogues & Listening",
 };
 
