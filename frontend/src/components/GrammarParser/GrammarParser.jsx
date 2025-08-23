@@ -7,6 +7,12 @@ export default function GrammarParser({ unit }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    if (currentWord) {
+      console.log("Current word:", currentWord);
+    }
+  }, [currentWord]);
+
+  useEffect(() => {
     fetchWord();
   }, [unit]);
 
@@ -65,20 +71,37 @@ export default function GrammarParser({ unit }) {
   const checkAnswer = () => {
     const userTags = Object.entries(selected)
       .filter(([_, v]) => Boolean(v))
-      .map(([k, v]) => v.toLowerCase())
-      .sort();
+      .map(([_, v]) => v.toLowerCase())
+      .sort(); // optional: sort for comparison
 
-    const correctTags = [
-      currentWord.noun_case?.toLowerCase(),
-      currentWord.number?.toLowerCase(),
-      currentWord.gender?.toLowerCase(),
-    ]
-      .filter(Boolean)
-      .sort();
+    let correctTags = [];
 
+    if (currentWord.type === "verb") {
+      // ✅ Consistent order: person → number → tense → voice → mood/subtype
+      correctTags = [
+        currentWord.person,
+        currentWord.number,
+        currentWord.tense,
+        currentWord.voice,
+        currentWord.subtype || currentWord.mood,
+      ]
+        .filter(Boolean)
+        .map((v) => v.toLowerCase());
+    } else {
+      // For nouns: case → number → gender
+      correctTags = [
+        currentWord.noun_case,
+        currentWord.number,
+        currentWord.gender,
+      ]
+        .filter(Boolean)
+        .map((v) => v.toLowerCase());
+    }
+
+    // Sort both arrays for comparison
     const isCorrect =
       correctTags.length === userTags.length &&
-      correctTags.every((v, i) => v === userTags[i]);
+      [...correctTags].sort().every((v, i) => v === userTags.sort()[i]);
 
     setFeedback(
       isCorrect
@@ -95,6 +118,23 @@ export default function GrammarParser({ unit }) {
       <h2>
         {currentWord.correct_forms} ({currentWord.type})
       </h2>
+
+      <p>
+        <strong>Expected tags:</strong>{" "}
+        {currentWord.type === "verb"
+          ? [
+              currentWord.person,
+              currentWord.number,
+              currentWord.tense,
+              currentWord.voice,
+              currentWord.subtype || currentWord.mood,
+            ]
+              .filter(Boolean)
+              .join(" ")
+          : [currentWord.noun_case, currentWord.number, currentWord.gender]
+              .filter(Boolean)
+              .join(" ")}
+      </p>
 
       {Object.keys(optionsToUse).map((key) => (
         <div key={key} style={{ marginBottom: "0.5rem" }}>
