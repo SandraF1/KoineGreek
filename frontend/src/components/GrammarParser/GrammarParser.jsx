@@ -6,23 +6,24 @@ export default function GrammarParser({ unit }) {
   const [feedback, setFeedback] = useState("");
   const [loading, setLoading] = useState(true);
 
+  useEffect(() => {
+    fetchWord();
+  }, [unit]);
+
   const fetchWord = async () => {
     try {
       setLoading(true);
       const res = await fetch(
         `http://localhost:5000/api/grammar?unit=${Number(unit)}`
       );
-      const data = await res.json();
+      const word = await res.json();
 
-      console.log("Fetched data:", data); // 🔍 Debug
-      if (!data || data.length === 0) {
+      if (!word || !word.word) {
         setCurrentWord(null);
         setLoading(false);
         return;
       }
 
-      const word = data[Math.floor(Math.random() * data.length)];
-      console.log("Selected word:", word); // 🔍 Debug
       setCurrentWord(word);
       setSelected({});
       setFeedback("");
@@ -33,13 +34,6 @@ export default function GrammarParser({ unit }) {
       setLoading(false);
     }
   };
-  useEffect(() => {
-    console.log("Unit received in GrammarParser:", unit, typeof unit);
-    fetchWord();
-  }, [unit]);
-
-  if (loading) return <p>Loading...</p>;
-  if (!currentWord) return <p>No content for this unit.</p>;
 
   const nounOptions = {
     number: ["singular", "plural"],
@@ -52,11 +46,16 @@ export default function GrammarParser({ unit }) {
     number: ["singular", "plural"],
     tense: ["present", "past", "future"],
     voice: ["active", "middle", "passive"],
-    mood: ["indicative", "subjunctive", "imperative"],
-    subtype: ["indicative", "imperative", "infinitive", "participle"],
+    mood_subtype: [
+      "indicative",
+      "subjunctive",
+      "imperative",
+      "infinitive",
+      "participle",
+    ],
   };
 
-  const optionsToUse = currentWord.type === "verb" ? verbOptions : nounOptions;
+  const optionsToUse = currentWord?.type === "verb" ? verbOptions : nounOptions;
 
   const handleSelect = (key, value) => {
     setSelected((prev) => ({ ...prev, [key]: value }));
@@ -64,59 +63,37 @@ export default function GrammarParser({ unit }) {
   };
 
   const checkAnswer = () => {
-    if (currentWord.type === "noun") {
-      if (currentWord.type === "noun") {
-        const correctTags =
-          currentWord.correct_combination
-            ?.toLowerCase()
-            .split(" ")
-            .filter(Boolean)
-            .sort() || [];
+    const userTags = Object.entries(selected)
+      .filter(([_, v]) => Boolean(v))
+      .map(([k, v]) => v.toLowerCase())
+      .sort();
 
-        const userTags = Object.values(selected)
-          .filter(Boolean)
-          .map((v) => v.toLowerCase())
-          .sort();
+    const correctTags = [
+      currentWord.noun_case?.toLowerCase(),
+      currentWord.number?.toLowerCase(),
+      currentWord.gender?.toLowerCase(),
+    ]
+      .filter(Boolean)
+      .sort();
 
-        const isCorrect =
-          correctTags.length === userTags.length &&
-          correctTags.every((v, i) => v === userTags[i]);
+    const isCorrect =
+      correctTags.length === userTags.length &&
+      correctTags.every((v, i) => v === userTags[i]);
 
-        setFeedback(
-          isCorrect
-            ? "✅ Correct!"
-            : `❌ Incorrect. Correct tags: ${
-                currentWord.correct_combination || "N/A"
-              }`
-        );
-      }
-    } else {
-      const userAnswer = Object.values(selected)
-        .filter(Boolean)
-        .map((v) => v.toLowerCase())
-        .sort();
-      const correct =
-        currentWord.correct_combination
-          ?.toLowerCase()
-          .split(" ")
-          .filter(Boolean)
-          .sort() || [];
-
-      const isCorrect =
-        correct.length === userAnswer.length &&
-        correct.every((v, i) => v === userAnswer[i]);
-      setFeedback(
-        isCorrect
-          ? "✅ Correct!"
-          : `❌ Incorrect. Correct: ${currentWord.correct_combination || "N/A"}`
-      );
-    }
+    setFeedback(
+      isCorrect
+        ? "✅ Correct!"
+        : `❌ Incorrect. Correct: ${correctTags.join(" ")}`
+    );
   };
+
+  if (loading) return <p>Loading...</p>;
+  if (!currentWord) return <p>No content for this unit.</p>;
 
   return (
     <div style={{ padding: "1rem" }}>
       <h2>
-        {currentWord.word} ({currentWord.type})
+        {currentWord.correct_forms} ({currentWord.type})
       </h2>
 
       {Object.keys(optionsToUse).map((key) => (
@@ -149,9 +126,7 @@ export default function GrammarParser({ unit }) {
         >
           ✅ Check Answer
         </button>
-        <button onClick={fetchWord} style={{ padding: "0.5rem 1rem" }}>
-          🔄 Next
-        </button>
+        <button onClick={fetchWord}>🔄 Next</button>
       </div>
 
       {feedback && (
