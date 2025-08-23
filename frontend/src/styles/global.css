@@ -138,3 +138,42 @@ button.active-section-btn {
   color: white;
   border: 2px solid #0056b3;
 }
+/* Table cells and headers */
+table {
+  font-size: 1rem; /* base size, adjust as needed */
+}
+
+table th,
+table td {
+  font-size: 1rem; /* increase text inside cells */
+  padding: 0.75rem; /* optional: more spacing */
+}
+
+/* Make radio buttons and checkboxes larger */
+input[type="radio"],
+input[type="checkbox"] {
+  transform: scale(1.5); /* increase the circle/box size */
+  margin-right: 0.5rem;
+}
+
+/* Make all labels bigger */
+label {
+  font-size: 1.2rem !important; /* larger text for readability */
+  line-height: 1.5;
+  cursor: pointer;
+}
+
+/* Optional: ensure spacing in groups */
+.radio-group label,
+.checkbox-group label {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+/* Adjust alignment if input is inside label */
+label input[type="radio"],
+label input[type="checkbox"] {
+  margin-right: 0.5rem;
+  transform: scale(1.5);
+}
