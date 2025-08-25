@@ -13,17 +13,19 @@ const quizDB = new sqlite3.Database("./db/quiz.db");
 // Health check
 app.get("/", (req, res) => res.send("Backend is running!"));
 
-// Endpoint: Get one random grammar item for a unit
+// Endpoint: Get all grammar rows for a unit
 app.get("/api/grammar", (req, res) => {
   const unit = parseInt(req.query.unit, 10);
-  if (isNaN(unit)) return res.status(400).json({ error: "Invalid unit parameter" });
+  if (isNaN(unit))
+    return res.status(400).json({ error: "Invalid unit parameter" });
 
   grammarDB.all("SELECT * FROM Grammar WHERE unit = ?", [unit], (err, rows) => {
     if (err) return res.status(500).json({ error: err.message });
     if (!rows || rows.length === 0) return res.json([]);
-    const randomItem = rows[Math.floor(Math.random() * rows.length)];
-    res.json(randomItem);
-    console.log("Grammar item selected:", randomItem);
+
+    // SEND ALL ROWS instead of one random object
+    res.json(rows);
+    console.log(`Returned ${rows.length} rows for unit ${unit}`);
   });
 });
 
@@ -31,11 +33,15 @@ app.get("/api/grammar", (req, res) => {
 app.get("/api/quiz", (req, res) => {
   const limit = parseInt(req.query.limit, 10) || 5;
 
-  quizDB.all("SELECT * FROM Quiz ORDER BY RANDOM() LIMIT ?", [limit], (err, rows) => {
-    if (err) return res.status(500).json({ error: err.message });
-    res.json(rows);
-    console.log(`Returned ${rows.length} quiz questions`);
-  });
+  quizDB.all(
+    "SELECT * FROM Quiz ORDER BY RANDOM() LIMIT ?",
+    [limit],
+    (err, rows) => {
+      if (err) return res.status(500).json({ error: err.message });
+      res.json(rows);
+      console.log(`Returned ${rows.length} quiz questions`);
+    }
+  );
 });
 
 // Use Render’s provided port
