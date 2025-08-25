@@ -13,7 +13,9 @@ export default function QuizFlashcards({ unitIds }) {
 
     Promise.all(
       unitIds.map((id) =>
-        fetch(`http://localhost:5000/api/quiz/${id}`).then((res) => res.json())
+        fetch(`https://koinegreek.onrender.com/api/quiz/${id}`).then((res) =>
+          res.json()
+        )
       )
     )
       .then((data) => {
@@ -27,7 +29,8 @@ export default function QuizFlashcards({ unitIds }) {
   }, [unitIds]);
 
   if (loading) return <p>Loading quiz questions...</p>;
-  if (!questions.length) return <p>No quiz questions found for selected units.</p>;
+  if (!questions.length)
+    return <p>No quiz questions found for selected units.</p>;
 
   return (
     <div>
@@ -44,8 +47,12 @@ export default function QuizFlashcards({ unitIds }) {
               backgroundColor: "#f9f9f9",
             }}
           >
-            <p><strong>Q:</strong> {q.question}</p>
-            <p><strong>A:</strong> {q.answer}</p>
+            <p>
+              <strong>Q:</strong> {q.question}
+            </p>
+            <p>
+              <strong>A:</strong> {q.answer}
+            </p>
           </div>
         ))}
       </div>

@@ -20,7 +20,7 @@ export default function GrammarParser({ unit }) {
     try {
       setLoading(true);
       const res = await fetch(
-        `http://localhost:5000/api/grammar?unit=${Number(unit)}`
+        `https://koinegreek.onrender.com/api/grammar?unit=${Number(unit)}`
       );
       const word = await res.json();
 
