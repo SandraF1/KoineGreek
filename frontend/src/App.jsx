@@ -1,6 +1,6 @@
 // src/App.jsx
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import { Container } from "react-bootstrap";
 
 import Navbar from "./components/Navbar";
@@ -16,22 +16,20 @@ import "./styles/global.css";
 
 export default function App() {
   return (
-    <Router>
-      <Container className="my-4">
-        <Navbar />
+    <Container className="my-4">
+      <Navbar />
 
-        <main style={{ padding: "1rem" }}>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/learn/*" element={<Learn />} />
-            <Route path="/terms" element={<Terms />} />
-            <Route path="/contact" element={<Contact />} />
-          </Routes>
-        </main>
+      <main style={{ padding: "1rem" }}>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/learn/*" element={<Learn />} />
+          <Route path="/terms" element={<Terms />} />
+          <Route path="/contact" element={<Contact />} />
+        </Routes>
+      </main>
 
-        <Footer />
-      </Container>
-    </Router>
+      <Footer />
+    </Container>
   );
 }
