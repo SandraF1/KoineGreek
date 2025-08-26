@@ -7,10 +7,16 @@ app.use(cors());
 app.use(express.json());
 
 // Open SQLite databases
-const grammarDB = new sqlite3.Database("./db/grammar.db");
-const quizDB = new sqlite3.Database("./db/quiz.db");
+const path = require("path");
 
-console.log("Using grammar database at:", __dirname + "/db/grammar.db");
+const grammarDB = new sqlite3.Database(path.join(__dirname, "db/grammar.db"));
+const quizDB = new sqlite3.Database(path.join(__dirname, "db/quiz.db"));
+
+console.log(
+  "Using grammar database at:",
+  path.join(__dirname, "db/grammar.db")
+);
+console.log("Using quiz database at:", path.join(__dirname, "db/quiz.db"));
 
 // Quick test for unit 3
 /* grammarDB.all("SELECT * FROM Grammar WHERE unit = ?", [3], (err, rows) => {
@@ -44,16 +50,23 @@ app.get("/api/grammar", (req, res) => {
 });
 
 // Endpoint: Get N random quiz questions
-app.get("/api/quiz", (req, res) => {
-  const limit = parseInt(req.query.limit, 10) || 5;
+// Endpoint: Get quiz questions for a specific unit
+app.get("/api/quiz/:unitId", (req, res) => {
+  const unitId = parseInt(req.params.unitId, 10);
+  console.log("Request for unitId:", unitId);
+
+  const limit = parseInt(req.query.limit, 10) || 20;
 
   quizDB.all(
-    "SELECT * FROM Quiz ORDER BY RANDOM() LIMIT ?",
-    [limit],
+    "SELECT * FROM Quiz WHERE unit_id = ? ORDER BY RANDOM() LIMIT ?",
+    [unitId, limit],
     (err, rows) => {
-      if (err) return res.status(500).json({ error: err.message });
+      if (err) {
+        console.error("DB error:", err.message);
+        return res.status(500).json({ error: err.message });
+      }
+      console.log("Rows fetched:", rows.length, rows);
       res.json(rows);
-      console.log(`Returned ${rows.length} quiz questions`);
     }
   );
 });

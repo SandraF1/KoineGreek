@@ -7,10 +7,9 @@ import GrammarParser from "../../components/GrammarParser/GrammarParser";
 import QuizFlashcards from "../../components/QuizBank/QuizFlashcards";
 import { unit2Flashcards } from "../../components/Flashcards/DummyCards";
 
-export default function Learn() {
-  const [activeSection, setActiveSection] = useState(null); // "lesson", "vocab", "grammar", "quiz"
-  const [selectedUnit, setSelectedUnit] = useState(null); // for lesson content
-  const [selectedUnits, setSelectedUnits] = useState([]); // for multi-unit sections
+export default function Learn({ unitIds, setUnitIds }) {
+  const [activeSection, setActiveSection] = useState(null);
+  const [selectedUnit, setSelectedUnit] = useState(1); // lesson single-unit
 
   const allUnits = [
     { id: 1, name: "Unit 1", hasContent: true },
@@ -20,19 +19,16 @@ export default function Learn() {
 
   const handleSectionClick = (section) => {
     setActiveSection(section);
-
-    // reset selections appropriately
     if (section === "lesson") {
-      setSelectedUnits([]);
+      setUnitIds([]);
       if (!selectedUnit) setSelectedUnit(1);
     } else {
       setSelectedUnit(null);
-      if (selectedUnits.length === 0) setSelectedUnits([1]);
+      if (unitIds.length === 0) setUnitIds([1]);
     }
   };
 
-  // Always sort selected units numerically
-  const sortedUnits = [...selectedUnits].sort((a, b) => a - b);
+  const sortedUnits = [...unitIds].sort((a, b) => a - b);
 
   return (
     <div style={{ padding: "1rem" }}>
@@ -58,7 +54,7 @@ export default function Learn() {
       </div>
 
       {/* Unit selector */}
-      {activeSection && activeSection === "lesson" && (
+      {activeSection === "lesson" && (
         <UnitSelector
           units={allUnits}
           selectedUnits={selectedUnit ? [selectedUnit] : []}
@@ -70,8 +66,8 @@ export default function Learn() {
       {activeSection && activeSection !== "lesson" && (
         <UnitSelector
           units={allUnits}
-          selectedUnits={selectedUnits}
-          setSelectedUnits={setSelectedUnits}
+          selectedUnits={unitIds}
+          setSelectedUnits={setUnitIds}
         />
       )}
 
@@ -84,11 +80,7 @@ export default function Learn() {
         sortedUnits.map((unit) => (
           <div key={unit} style={{ marginTop: 20 }}>
             <h3>Unit {unit} Vocabulary Flashcards</h3>
-            {unit === 2 ? (
-              <FlashcardList cards={unit2Flashcards} />
-            ) : (
-              <p>No cards yet.</p>
-            )}
+            {unit === 2 ? <FlashcardList cards={unit2Flashcards} /> : <p>No cards yet.</p>}
           </div>
         ))}
 
@@ -96,16 +88,15 @@ export default function Learn() {
         sortedUnits.map((unit) => (
           <div key={unit} style={{ marginTop: 20 }}>
             <h3>Unit {unit} Grammar Parser</h3>
-            <GrammarParser unit={unit} /> {/* ✅ Pass unit here */}
+            <GrammarParser unit={unit} />
           </div>
         ))}
 
       {activeSection === "quiz" &&
-        sortedUnits.map((unit) => (
-          <div key={unit} style={{ marginTop: 20 }}>
-            <h3>Unit {unit} Quiz Bank</h3>
-            <QuizFlashcards />
-          </div>
+        (sortedUnits.length > 0 ? (
+          <QuizFlashcards unitIds={sortedUnits} />
+        ) : (
+          <p>Please select at least one unit to view quiz flashcards.</p>
         ))}
     </div>
   );
