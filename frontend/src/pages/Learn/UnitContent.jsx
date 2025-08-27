@@ -12,7 +12,7 @@ export default function UnitContent({ unitNumber }) {
   const cards = flashcardsByUnit[unitNumber] || [];
 
   return (
-    <div style={{ marginTop: 20 }}>
+    <div>
       <h2>Unit {unitNumber} Vocabulary Flashcards</h2>
       <FlashcardList cards={cards} />
     </div>

@@ -7,18 +7,7 @@ export default function Flashcard({ card }) {
   if (!card) return null;
 
   return (
-    <div
-      onClick={() => setFlipped(!flipped)}
-      style={{
-        border: "1px solid #ccc",
-        padding: 12,
-        margin: 8,
-        cursor: "pointer",
-        width: 200,
-        borderRadius: 5,
-        backgroundColor: "#f9f9f9",
-      }}
-    >
+    <div onClick={() => setFlipped(!flipped)}>
       {flipped ? (
         <div>
           <strong>Definition:</strong> {card.definition}

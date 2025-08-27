@@ -82,12 +82,10 @@ export default function Unit1_ConceptCheck() {
       <p>Select the correct Greek name for each letter:</p>
 
       {questions.map((q, i) => (
-        <div key={i} style={{ marginBottom: "20px" }}>
-          <div style={{ fontSize: "24px", marginBottom: "8px" }}>
-            {q.letter}
-          </div>
+        <div key={i}>
+          <div>{q.letter}</div>
           {q.options.map((opt) => (
-            <label key={opt} style={{ display: "block", cursor: "pointer" }}>
+            <label key={opt}>
               <input
                 type="radio"
                 name={`question-${i}`}
@@ -101,13 +99,11 @@ export default function Unit1_ConceptCheck() {
         </div>
       ))}
 
-      <button onClick={handleSubmit} style={{ marginRight: "10px" }}>
-        Submit
-      </button>
+      <button onClick={handleSubmit}>Submit</button>
       <button onClick={handleReset}>Reset</button>
 
       {score !== null && (
-        <p style={{ marginTop: "20px" }}>
+        <p>
           You got {score} out of {questions.length} correct.
         </p>
       )}

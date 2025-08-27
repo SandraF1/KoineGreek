@@ -5,7 +5,7 @@ export default function FlashcardList({ cards }) {
   if (!cards || cards.length === 0) return null;
 
   return (
-    <div style={{ display: "flex", flexWrap: "wrap", gap: 10 }}>
+    <div>
       {cards.map((c, i) => (
         <Flashcard key={i} card={c} />
       ))}

@@ -73,81 +73,31 @@ export default function Learn({ unitIds, setUnitIds }) {
     };
 
     if (allCards.length === 0)
-      return (
-        <p style={{ fontSize: "1.2rem" }}>
-          No vocabulary flashcards for selected units.
-        </p>
-      );
+      return <p>No vocabulary flashcards for selected units.</p>;
 
     const currentCard = allCards[currentIndex];
 
     return (
-      <div style={{ marginBottom: 20 }}>
-        <div
-          onClick={() => setFlipped((f) => !f)}
-          style={{
-            border: "1px solid #ccc",
-            padding: 30,
-            width:400,
-            height: 220,
-            borderRadius: 8,
-            backgroundColor: "#fff",
-            boxShadow: "0 2px 6px rgba(0,0,0,0.15)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            textAlign: "center",
-            fontSize: "1.4rem",
-            fontFamily: "serif",
-            marginBottom: 10,
-            cursor: "pointer",
-            whiteSpace: "pre-wrap",
-          }}
-        >
+      <div>
+        <div onClick={() => setFlipped((f) => !f)}>
           {flipped
             ? `${currentCard.definition || ""}\n${currentCard.example || ""}`
             : currentCard.word}
         </div>
 
-        <button
-          onClick={nextCard}
-          style={{
-            padding: "10px 20px",
-            borderRadius: 5,
-            border: "none",
-            background: "#007bff",
-            color: "#fff",
-            cursor: "pointer",
-            fontSize: "1rem",
-          }}
-        >
-          Next
-        </button>
+        <button onClick={nextCard}>Next</button>
       </div>
     );
   };
 
   return (
-    <div style={{ padding: "1rem", fontFamily: "Arial, sans-serif" }}>
-      <h1 style={{ fontSize: "2rem" }}>Learn</h1>
+    <div>
+      <h1>Learn</h1>
 
       {/* Section buttons */}
-      <div style={{ display: "flex", gap: 10, marginBottom: 20 }}>
+      <div>
         {["lesson", "vocab", "grammar", "quiz"].map((section) => (
-          <button
-            key={section}
-            onClick={() => handleSectionClick(section)}
-            style={{
-              padding: "0.5rem 1rem",
-              borderRadius: 5,
-              border: "1px solid #ccc",
-              backgroundColor:
-                activeSection === section ? "#007bff" : "#f9f9f9",
-              color: activeSection === section ? "#fff" : "#000",
-              cursor: "pointer",
-              fontSize: "1rem",
-            }}
-          >
+          <button key={section} onClick={() => handleSectionClick(section)}>
             {section === "lesson"
               ? "Lesson Content"
               : section === "vocab"
@@ -186,8 +136,8 @@ export default function Learn({ unitIds, setUnitIds }) {
 
       {activeSection === "grammar" &&
         sortedUnits.map((unit) => (
-          <div key={unit} style={{ marginTop: 20 }}>
-            <h3 style={{ fontSize: "1.2rem" }}>Unit {unit} Grammar Parser</h3>
+          <div key={unit}>
+            <h3>Unit {unit} Grammar Parser</h3>
             <GrammarParser unit={unit} />
           </div>
         ))}

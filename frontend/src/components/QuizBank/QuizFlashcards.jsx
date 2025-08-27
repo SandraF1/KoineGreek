@@ -52,42 +52,11 @@ export default function QuizFlashcards({ unitIds }) {
   return (
     <div>
       <h3>Quiz Flashcards</h3>
-      <div
-        onClick={() => setFlipped((f) => !f)}
-        style={{
-          border: "1px solid #ccc",
-          padding: 20,
-          width: 300,
-          height: 180,
-          borderRadius: 8,
-          backgroundColor: "#fff",
-          boxShadow: "0 2px 6px rgba(0,0,0,0.15)",
-          cursor: "pointer",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          textAlign: "center",
-          fontSize: "1.2em",
-          fontFamily: "serif",
-          marginBottom: 20,
-        }}
-      >
+      <div onClick={() => setFlipped((f) => !f)}>
         {flipped ? currentCard.answer : currentCard.question}
       </div>
 
-      <button
-        onClick={nextCard}
-        style={{
-          padding: "10px 20px",
-          borderRadius: 5,
-          border: "none",
-          background: "#007bff",
-          color: "#fff",
-          cursor: "pointer",
-        }}
-      >
-        Next
-      </button>
+      <button onClick={nextCard}>Next</button>
     </div>
   );
 }

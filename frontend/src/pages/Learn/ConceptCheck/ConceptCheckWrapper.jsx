@@ -37,12 +37,8 @@ export default function ConceptCheckWrapper({ unitNumber }) {
     <div>
       <h3>Concept Check</h3>
       <CurrentSection />
-      <div style={{ marginTop: "1rem" }}>
-        <button
-          onClick={goBack}
-          disabled={currentIndex === 0}
-          style={{ marginRight: "0.5rem" }}
-        >
+      <div>
+        <button onClick={goBack} disabled={currentIndex === 0}>
           ← Previous
         </button>
         <button

@@ -4,63 +4,22 @@ import "./Navbar.css"; // optional, for styling
 
 export default function Navbar() {
   return (
-    <nav style={{ padding: "1rem", backgroundColor: "#333", color: "#fff" }}>
-      <ul style={{ display: "flex", listStyle: "none", gap: "1rem", margin
-: 0, padding: 0 }}>
+    <nav>
+      <ul>
         <li>
-          <NavLink
-            to="/"
-            style={({ isActive }) => ({
-              color: isActive ? "yellow" : "white",
-              textDecoration: "none",
-            })}
-          >
-            Home
-          </NavLink>
+          <NavLink to="/">Home</NavLink>
         </li>
         <li>
-          <NavLink
-            to="/about"
-            style={({ isActive }) => ({
-              color: isActive ? "yellow" : "white",
-              textDecoration: "none",
-            })}
-          >
-            About
-          </NavLink>
+          <NavLink to="/about">About</NavLink>
         </li>
         <li>
-          <NavLink
-            to="/learn"
-            style={({ isActive }) => ({
-              color: isActive ? "yellow" : "white",
-              textDecoration: "none",
-            })}
-          >
-            Learn
-          </NavLink>
+          <NavLink to="/learn">Learn</NavLink>
         </li>
         <li>
-          <NavLink
-            to="/terms"
-            style={({ isActive }) => ({
-              color: isActive ? "yellow" : "white",
-              textDecoration: "none",
-            })}
-          >
-            Terms
-          </NavLink>
+          <NavLink to="/terms">Terms</NavLink>
         </li>
         <li>
-          <NavLink
-            to="/contact"
-            style={({ isActive }) => ({
-              color: isActive ? "yellow" : "white",
-              textDecoration: "none",
-            })}
-          >
-            Contact
-          </NavLink>
+          <NavLink to="/contact">Contact</NavLink>
         </li>
       </ul>
     </nav>

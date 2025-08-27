@@ -16,12 +16,19 @@ export default function GrammarParser({ unit }) {
   const verbOptions = {
     tense: ["present", "past", "future"],
     voice: ["active", "middle", "passive"],
-    mood_subtype: ["indicative", "subjunctive", "imperative", "infinitive", "participle"],
+    mood_subtype: [
+      "indicative",
+      "subjunctive",
+      "imperative",
+      "infinitive",
+      "participle",
+    ],
     person: ["1st", "2nd", "3rd"],
     number: ["singular", "plural"],
   };
 
-  const optionsToUse = currentWordRow?.type === "verb" ? verbOptions : nounOptions;
+  const optionsToUse =
+    currentWordRow?.type === "verb" ? verbOptions : nounOptions;
 
   useEffect(() => {
     fetchWord();
@@ -82,7 +89,8 @@ export default function GrammarParser({ unit }) {
     if (!row) return "";
     if (row.type === "verb") {
       const mood = row.mood_subtype ?? row.mood;
-      const person = row.person ?? (mood?.toLowerCase() === "imperative" ? "2nd" : null);
+      const person =
+        row.person ?? (mood?.toLowerCase() === "imperative" ? "2nd" : null);
       const parts = [row.tense, row.voice, mood, person, row.number].filter(
         (v) => v !== undefined && v !== null
       );
@@ -109,7 +117,9 @@ export default function GrammarParser({ unit }) {
       .join(" ");
 
     const validRows = [currentWordRow, ...alternateRows].map(getTags);
-    const isCorrect = validRows.some((rowStr) => areTagsEqual(userTags, rowStr));
+    const isCorrect = validRows.some((rowStr) =>
+      areTagsEqual(userTags, rowStr)
+    );
     const uniqueCorrect = [...new Set(validRows)];
 
     setFeedback(
@@ -123,7 +133,7 @@ export default function GrammarParser({ unit }) {
   if (!currentWordRow) return <p>No content for this unit.</p>;
 
   return (
-    <div style={{ padding: "1rem" }}>
+    <div>
       <h2>
         {currentWordRow.word} ({currentWordRow.type})
       </h2>
@@ -138,49 +148,22 @@ export default function GrammarParser({ unit }) {
       </p>
 
       {Object.keys(optionsToUse).map((key) => (
-        <div key={key} style={{ marginBottom: "0.5rem" }}>
+        <div key={key}>
           <strong>{key.charAt(0).toUpperCase() + key.slice(1)}:</strong>{" "}
           {optionsToUse[key].map((val) => (
-            <button
-              key={val}
-              onClick={() => handleSelect(key, val)}
-              style={{
-                margin: "0 0.25rem",
-                padding: "0.25rem 0.5rem",
-                backgroundColor: selected[key] === val ? "#4caf50" : "#eee",
-                color: selected[key] === val ? "white" : "black",
-                border: "1px solid #ccc",
-                borderRadius: "4px",
-                cursor: "pointer",
-              }}
-            >
+            <button key={val} onClick={() => handleSelect(key, val)}>
               {val}
             </button>
           ))}
         </div>
       ))}
 
-      <div style={{ marginTop: "1rem" }}>
-        <button
-          onClick={checkAnswer}
-          style={{ padding: "0.5rem 1rem", marginRight: "0.5rem" }}
-        >
-          ✅ Check Answer
-        </button>
+      <div>
+        <button onClick={checkAnswer}>✅ Check Answer</button>
         <button onClick={fetchWord}>🔄 Next</button>
       </div>
 
-      {feedback && (
-        <p
-          style={{
-            marginTop: "1rem",
-            fontWeight: "bold",
-            color: feedback.includes("Correct") ? "green" : "red",
-          }}
-        >
-          {feedback}
-        </p>
-      )}
+      {feedback && <p>{feedback}</p>}
     </div>
   );
 }

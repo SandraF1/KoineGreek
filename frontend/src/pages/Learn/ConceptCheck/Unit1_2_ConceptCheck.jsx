@@ -84,7 +84,7 @@ export default function QuizOrder() {
 
       <div>
         {quizItems.map((item, index) => (
-          <div key={index} style={{ marginBottom: "0.5rem" }}>
+          <div key={index}>
             <label>
               {item.letter} :{" "}
               <input
@@ -100,15 +100,13 @@ export default function QuizOrder() {
         ))}
       </div>
 
-      <div style={{ marginTop: "1rem" }}>
+      <div>
         <button onClick={checkAnswers}>Check Answers</button>{" "}
         <button onClick={showAnswers}>Show Correct Answers</button>{" "}
         <button onClick={clearAnswers}>Clear</button>
       </div>
 
-      <div aria-live="polite" style={{ marginTop: "1rem", fontWeight: "bold" }}>
-        {result}
-      </div>
+      <div aria-live="polite">{result}</div>
     </section>
   );
 }
