@@ -3,7 +3,8 @@
    ======================= */
 
 html {
-  font-size: 24px; /* default is 16px, increase for bigger text everywhere */
+  font-size: 24px;
+  overflow-y: scroll; /* default is 16px, increase for bigger text everywhere */
 }
 
 body {
