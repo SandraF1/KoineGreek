@@ -206,3 +206,9 @@ label input[type="checkbox"] {
 .flashcard-front {
   font-weight: bold;
 }
+
+/* src/styles/global.css or Navbar.css */
+.active-link {
+  font-weight: bold;
+  text-decoration: underline;
+}
