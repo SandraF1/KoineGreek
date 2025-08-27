@@ -31,7 +31,6 @@ export default function Learn({ unitIds, setUnitIds }) {
 
   const sortedUnits = [...unitIds].sort((a, b) => a - b);
 
-  // Flashcards component
   const VocabFlashcards = ({ units }) => {
     const [allCards, setAllCards] = useState([]);
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -59,7 +58,8 @@ export default function Learn({ unitIds, setUnitIds }) {
       setFlipped(false);
     }, [units]);
 
-    if (!allCards.length) return <p>No vocabulary flashcards for selected units.</p>;
+    if (!allCards.length)
+      return <p>No vocabulary flashcards for selected units.</p>;
 
     const currentCard = allCards[currentIndex];
 
@@ -96,8 +96,7 @@ export default function Learn({ unitIds, setUnitIds }) {
   };
 
   return (
-    <Container className="my-4">
-      {/* Page header */}
+    <Container className="my-4" style={{ marginTop: "70px" }}>
       <h1 className="mb-3">Learn</h1>
 
       {/* Section buttons */}
@@ -138,13 +137,36 @@ export default function Learn({ unitIds, setUnitIds }) {
         />
       </div>
 
-      {/* Content area with fixed height and vertical centering */}
+      {/* Content area */}
       <div
-        className="p-3 border rounded bg-light d-flex flex-column justify-content-center"
-        style={{ height: "500px" }}
+        className="p-3 border rounded bg-light position-relative"
+        style={{
+          minHeight: "500px",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: activeSection === "vocab" ? "center" : "flex-start",
+          overflowY: "auto",
+        }}
       >
-        {activeSection === "lesson" && selectedUnit && (
-          <UnitPage unitNumber={selectedUnit} />
+        {activeSection === "lesson" && (
+          <div style={{ flex: 1, position: "relative" }}>
+            <div style={{ visibility: selectedUnit ? "visible" : "hidden" }}>
+              <UnitPage unitNumber={selectedUnit || 1} />
+            </div>
+            {!selectedUnit && (
+              <div
+                style={{
+                  position: "absolute",
+                  top: "50%",
+                  left: "50%",
+                  transform: "translate(-50%, -50%)",
+                  color: "#6c757d",
+                }}
+              >
+                Please select a unit to begin.
+              </div>
+            )}
+          </div>
         )}
 
         {activeSection === "vocab" && <VocabFlashcards units={sortedUnits} />}
