@@ -87,10 +87,12 @@ export default function GrammarParser({ unit }) {
 
   const getTags = (row) => {
     if (!row) return "";
+
     if (row.type === "verb") {
       const mood = row.mood_subtype ?? row.mood;
-      const person =
-        row.person ?? (mood?.toLowerCase() === "imperative" ? "2nd" : null);
+      // Make person required — do not default to 2nd for imperatives
+      const person = row.person;
+
       const parts = [row.tense, row.voice, mood, person, row.number].filter(
         (v) => v !== undefined && v !== null
       );
@@ -148,13 +150,28 @@ export default function GrammarParser({ unit }) {
       </p>
 
       {Object.keys(optionsToUse).map((key) => (
-        <div key={key}>
+        <div key={key} style={{ marginBottom: "8px" }}>
           <strong>{key.charAt(0).toUpperCase() + key.slice(1)}:</strong>{" "}
-          {optionsToUse[key].map((val) => (
-            <button key={val} onClick={() => handleSelect(key, val)}>
-              {val}
-            </button>
-          ))}
+          {optionsToUse[key].map((val) => {
+            const isSelected = selected[key] === val;
+            return (
+              <button
+                key={val}
+                onClick={() => handleSelect(key, val)}
+                style={{
+                  margin: "2px",
+                  padding: "4px 8px",
+                  border: "1px solid #333",
+                  borderRadius: "4px",
+                  cursor: "pointer",
+                  backgroundColor: isSelected ? "#4CAF50" : "#fff",
+                  color: isSelected ? "#fff" : "#000",
+                }}
+              >
+                {val}
+              </button>
+            );
+          })}
         </div>
       ))}
 
