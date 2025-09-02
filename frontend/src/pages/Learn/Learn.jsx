@@ -4,7 +4,11 @@ import UnitPage from "./UnitPage";
 import UnitSelector from "../../components/UnitSelector";
 import GrammarParser from "../../components/GrammarParser/GrammarParser";
 import QuizFlashcards from "../../components/QuizBank/QuizFlashcards";
-import { unit2Flashcards, unit3Flashcards } from "../../components/Flashcards/DummyCards";
+import {
+  unit2Flashcards,
+  unit3Flashcards,
+  unit4Flashcards,
+} from "../../components/Flashcards/DummyCards";
 //import { unit3Flashcards } from "../components/Flashcards/unit3Flashcards";
 
 export default function Learn({ unitIds, setUnitIds }) {
@@ -15,9 +19,10 @@ export default function Learn({ unitIds, setUnitIds }) {
     { id: 1, name: "Unit 1", hasContent: true },
     { id: 2, name: "Unit 2", hasContent: true },
     { id: 3, name: "Unit 3", hasContent: true },
+    { id: 4, name: "Unit 4", hasContent: true },
   ];
 
-  const allVocabCards = { 2: unit2Flashcards, 3: unit3Flashcards };
+  const allVocabCards = { 2: unit2Flashcards, 3: unit3Flashcards, 4: unit4Flashcards };
 
   const handleSectionClick = (section) => {
     setActiveSection(section);

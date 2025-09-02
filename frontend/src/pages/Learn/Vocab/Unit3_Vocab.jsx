@@ -1,7 +1,7 @@
 // src/pages/Learn/Vocab/Unit2_2D_Nouns.jsx
 import React from "react";
 
-export default function Unit2_2DNouns() {
+export default function Unit3_2DNouns() {
   const words = [
     { greek: "λόγος", gloss: "word" },
     { greek: "θεός", gloss: "god, God" },

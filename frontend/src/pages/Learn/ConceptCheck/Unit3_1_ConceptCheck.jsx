@@ -22,7 +22,7 @@ export default function GreekGrammarQuiz() {
     {
       id: 3,
       question:
-        "For which case and number do the declension masculine articles not begin with a tau?",
+        "For which case and number do the second declension masculine articles not begin with a tau?",
       options: [
         "Nominative singular",
         "Nominative plural",

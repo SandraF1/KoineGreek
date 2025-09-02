@@ -107,3 +107,56 @@ export const unit3Flashcards = [
     example: "τὸ σημεῖον ἐγένετο ἐν τῷ οὐρανῷ. (the sign appeared in the sky)",
   },
 ];
+
+export const unit4Flashcards = [
+  {
+    word: "ἀνήρ",
+    definition: "man, husband",
+    example: "ὁ ἀνήρ σοφός ἐστιν. (the man is wise)",
+  },
+  {
+    word: "γυνή",
+    definition: "woman, wife",
+    example: "ἡ γυνή τῆς οἰκίας. (the woman of the house)",
+  },
+  {
+    word: "πατήρ",
+    definition: "father",
+    example: "ὁ πατήρ τῶν παιδίων. (the father of the children)",
+  },
+  {
+    word: "μήτηρ",
+    definition: "mother",
+    example: "ἡ μήτηρ τῆς κόρης. (the mother of the girl)",
+  },
+  {
+    word: "σάρξ",
+    definition: "flesh, body",
+    example: "ἡ σάρξ ἀσθενής ἐστιν. (the flesh is weak)",
+  },
+  {
+    word: "πνεῦμα",
+    definition: "spirit, wind, breath",
+    example: "τὸ πνεῦμα ἅγιον ἐστίν. (the spirit is holy)",
+  },
+  {
+    word: "λόγος",
+    definition: "word, reason, account",
+    example: "ὁ λόγος τοῦ διδασκάλου. (the word of the teacher)",
+  },
+  {
+    word: "χείρ",
+    definition: "hand",
+    example: "ἡ χείρ τοῦ ἀνθρώπου. (the hand of the man)",
+  },
+  {
+    word: "θεός",
+    definition: "god, God",
+    example: "ὁ θεός τῶν ἐθνῶν. (the God of the nations)",
+  },
+  {
+    word: "σῶμα",
+    definition: "body",
+    example: "τὸ σῶμα ἀσθενές ἐστιν. (the body is weak)",
+  },
+];
