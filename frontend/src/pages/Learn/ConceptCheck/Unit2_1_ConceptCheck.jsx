@@ -1,4 +1,3 @@
-// src/pages/Learn/ConceptCheckUnit2.jsx
 import React, { useState } from "react";
 
 export default function ConceptCheckUnit2() {
@@ -33,9 +32,12 @@ export default function ConceptCheckUnit2() {
   const [answers, setAnswers] = useState({});
   const [submitted, setSubmitted] = useState(false);
   const [score, setScore] = useState(0);
+  const [checked, setChecked] = useState(false); // For "Check Answers"
 
   const handleAnswer = (id, value) => {
-    setAnswers((prev) => ({ ...prev, [id]: value }));
+    if (!submitted) {
+      setAnswers((prev) => ({ ...prev, [id]: value }));
+    }
   };
 
   const handleSubmit = () => {
@@ -45,15 +47,32 @@ export default function ConceptCheckUnit2() {
     });
     setScore(correctCount);
     setSubmitted(true);
+    setChecked(true); // show answers when submitting
   };
 
   const handleClear = () => {
     setAnswers({});
     setSubmitted(false);
     setScore(0);
+    setChecked(false);
   };
 
+  const handleCheck = () => {
+    setChecked(true);
+  };
 
+  const getButtonClass = (q, value) => {
+    if (!checked) {
+      return answers[q.id] === value
+        ? "btn btn-warning me-2"
+        : "btn btn-outline-primary me-2";
+    }
+    // After checking or submitting
+    if (value === q.correct) return "btn btn-success me-2"; // correct answer
+    if (answers[q.id] === value && value !== q.correct)
+      return "btn btn-danger me-2"; // wrong selection
+    return "btn btn-outline-secondary me-2"; // unselected, not correct
+  };
 
   return (
     <div className="container my-4">
@@ -66,39 +85,28 @@ export default function ConceptCheckUnit2() {
           {["True", "False"].map((opt) => {
             const value = opt === "True";
             return (
-              <div key={opt} className="form-check form-check-inline">
-                <input
-                  className={getButtonClass(q, value)}
-                  type="radio"
-                  name={`question-${q.id}`}
-                  id={`question-${q.id}-${opt.toLowerCase()}`}
-                  value={value}
-                  checked={answers[q.id] === value}
-                  onChange={() => handleAnswer(q.id, value)}
-                  disabled={submitted}
-                />
-                <label
-                  className="form-check-label"
-                  htmlFor={`question-${q.id}-${opt.toLowerCase()}`}
-                >
-                  {opt}
-                </label>
-              </div>
+              <button
+                key={opt}
+                type="button"
+                className={getButtonClass(q, value)}
+                onClick={() => handleAnswer(q.id, value)}
+                disabled={submitted} // buttons disabled after submission
+              >
+                {opt}
+              </button>
             );
           })}
-          {submitted && (
-            <div className="mt-2">
-              {answers[q.id] === q.correct ? (
-                <span className="text-primary">Correct ✅</span>
-              ) : (
-                <span className="text-warning">Incorrect ⚠️</span>
-              )}
-            </div>
-          )}
         </div>
       ))}
 
       <div className="mt-3">
+        <button
+          className="btn btn-info me-2"
+          onClick={handleCheck}
+          disabled={checked}
+        >
+          Check Answers
+        </button>
         <button
           className="btn btn-primary me-2"
           onClick={handleSubmit}
@@ -112,10 +120,10 @@ export default function ConceptCheckUnit2() {
       </div>
 
       {submitted && (
-        <div className="mt-3">
-          <h5>
+        <div className="mt-3 text-center">
+          <h3 className="display-5 fw-bold">
             Score: {score} / {questions.length}
-          </h5>
+          </h3>
         </div>
       )}
     </div>

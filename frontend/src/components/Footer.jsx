@@ -4,7 +4,7 @@ export default function Footer() {
   return (
     <footer>
       <p>
-        &copy; {new Date().getFullYear()} My React Learning App. All rights
+        &copy; {new Date().getFullYear()} The Koine Greek Project. All rights
         reserved.
       </p>
     </footer>

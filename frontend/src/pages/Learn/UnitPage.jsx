@@ -100,7 +100,7 @@ function ConceptCheckWrapper({ unitNumber }) {
 const unitTitles = {
   1: "Introduction to Greek",
   2: "First declension nouns",
-  3: "Dialogues & Listening",
+  3: "Second declension nouns, the vocative case and proper nouns",
 };
 
 export default function UnitPage({ unitNumber }) {
