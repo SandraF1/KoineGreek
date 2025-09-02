@@ -4,7 +4,8 @@ import UnitPage from "./UnitPage";
 import UnitSelector from "../../components/UnitSelector";
 import GrammarParser from "../../components/GrammarParser/GrammarParser";
 import QuizFlashcards from "../../components/QuizBank/QuizFlashcards";
-import { unit2Flashcards } from "../../components/Flashcards/DummyCards";
+import { unit2Flashcards, unit3Flashcards } from "../../components/Flashcards/DummyCards";
+//import { unit3Flashcards } from "../components/Flashcards/unit3Flashcards";
 
 export default function Learn({ unitIds, setUnitIds }) {
   const [activeSection, setActiveSection] = useState("lesson");
@@ -16,7 +17,7 @@ export default function Learn({ unitIds, setUnitIds }) {
     { id: 3, name: "Unit 3", hasContent: true },
   ];
 
-  const allVocabCards = { 2: unit2Flashcards };
+  const allVocabCards = { 2: unit2Flashcards, 3: unit3Flashcards };
 
   const handleSectionClick = (section) => {
     setActiveSection(section);

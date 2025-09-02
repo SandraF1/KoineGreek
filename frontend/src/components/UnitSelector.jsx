@@ -30,10 +30,15 @@ export default function UnitSelector({
           return (
             <button
               key={u.id}
-              className={`btn btn-${isSelected ? "primary" : "outline-primary"}`}
+              className={`btn ${
+                isSelected
+                  ? "btn-primary text-white border border-dark"
+                  : "btn-outline-secondary"
+              }`}
               onClick={() => toggleUnit(u.id)}
+              style={{ fontWeight: isSelected ? "bold" : "normal" }}
             >
-              {u.name}
+              {u.name} {isSelected && "✓"}
             </button>
           );
         })}

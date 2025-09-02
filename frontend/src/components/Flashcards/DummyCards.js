@@ -52,3 +52,58 @@ export const unit2Flashcards = [
     example: "ἡ γραφή τῆς ἐκκλησίας. (the scripture of the church)",
   },
 ];
+
+// src/components/Flashcards/unit3Flashcards.js
+
+export const unit3Flashcards = [
+  {
+    word: "λόγος",
+    definition: "word, reason, speech",
+    example: "ὁ λόγος τοῦ διδασκάλου. (the word of the teacher)",
+  },
+  {
+    word: "θεός",
+    definition: "god, God",
+    example: "ὁ θεός τῶν ἐθνῶν. (the God of the nations)",
+  },
+  {
+    word: "ἄνθρωπος",
+    definition: "man, human",
+    example: "ὁ ἄνθρωπος σοφός ἐστιν. (the man is wise)",
+  },
+  {
+    word: "κύριος",
+    definition: "lord, master",
+    example: "ὁ κύριος τῆς οἰκίας. (the master of the house)",
+  },
+  {
+    word: "δοῦλος",
+    definition: "servant, slave",
+    example: "ὁ δοῦλος τοῦ κυρίου. (the servant of the lord)",
+  },
+  {
+    word: "ἔργον",
+    definition: "work, deed",
+    example: "τὸ ἔργον τῶν μαθητῶν. (the work of the students)",
+  },
+  {
+    word: "δῶρον",
+    definition: "gift, present",
+    example: "τὸ δῶρον τοῦ βασιλέως. (the gift of the king)",
+  },
+  {
+    word: "παιδίον",
+    definition: "child",
+    example: "τὸ παιδίον παίζει ἐν τῇ αὐλῇ. (the child plays in the courtyard)",
+  },
+  {
+    word: "πλοῖον",
+    definition: "ship, boat",
+    example: "τὸ πλοῖον ἐν τῇ θαλάσσῃ. (the ship is on the sea)",
+  },
+  {
+    word: "σημεῖον",
+    definition: "sign, miracle",
+    example: "τὸ σημεῖον ἐγένετο ἐν τῷ οὐρανῷ. (the sign appeared in the sky)",
+  },
+];
