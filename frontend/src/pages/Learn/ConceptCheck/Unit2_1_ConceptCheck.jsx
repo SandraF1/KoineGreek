@@ -53,14 +53,7 @@ export default function ConceptCheckUnit2() {
     setScore(0);
   };
 
-  const getButtonClass = (q, value) => {
-    if (!submitted) return "form-check-input";
-    if (value === q.correct)
-      return "form-check-input border-primary bg-primary text-white";
-    if (answers[q.id] === value && value !== q.correct)
-      return "form-check-input border-warning bg-warning text-white";
-    return "form-check-input";
-  };
+
 
   return (
     <div className="container my-4">
@@ -70,42 +63,29 @@ export default function ConceptCheckUnit2() {
       {questions.map((q) => (
         <div key={q.id} className="mb-3 p-3 border rounded">
           <p>{q.text}</p>
-          <div className="form-check form-check-inline">
-            <input
-              className={getButtonClass(q, true)}
-              type="radio"
-              name={`question-${q.id}`}
-              id={`question-${q.id}-true`}
-              value="true"
-              checked={answers[q.id] === true}
-              onChange={() => handleAnswer(q.id, true)}
-              disabled={submitted}
-            />
-            <label
-              className="form-check-label"
-              htmlFor={`question-${q.id}-true`}
-            >
-              True
-            </label>
-          </div>
-          <div className="form-check form-check-inline">
-            <input
-              className={getButtonClass(q, false)}
-              type="radio"
-              name={`question-${q.id}`}
-              id={`question-${q.id}-false`}
-              value="false"
-              checked={answers[q.id] === false}
-              onChange={() => handleAnswer(q.id, false)}
-              disabled={submitted}
-            />
-            <label
-              className="form-check-label"
-              htmlFor={`question-${q.id}-false`}
-            >
-              False
-            </label>
-          </div>
+          {["True", "False"].map((opt) => {
+            const value = opt === "True";
+            return (
+              <div key={opt} className="form-check form-check-inline">
+                <input
+                  className={getButtonClass(q, value)}
+                  type="radio"
+                  name={`question-${q.id}`}
+                  id={`question-${q.id}-${opt.toLowerCase()}`}
+                  value={value}
+                  checked={answers[q.id] === value}
+                  onChange={() => handleAnswer(q.id, value)}
+                  disabled={submitted}
+                />
+                <label
+                  className="form-check-label"
+                  htmlFor={`question-${q.id}-${opt.toLowerCase()}`}
+                >
+                  {opt}
+                </label>
+              </div>
+            );
+          })}
           {submitted && (
             <div className="mt-2">
               {answers[q.id] === q.correct ? (
