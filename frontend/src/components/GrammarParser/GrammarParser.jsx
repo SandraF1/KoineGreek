@@ -46,10 +46,18 @@ export default function GrammarParser({ unit }) {
       const randomRow = rows[Math.floor(Math.random() * rows.length)];
       setCurrentWordRow(randomRow);
 
-      // Gather all DB rows that match the same word as valid alternatives
-      const alternates = rows.filter(
-        (r) => r.word === randomRow.word && r.id !== randomRow.id
-      );
+      // Gather all DB rows with the same word as alternatives, deduplicated
+      const alternates = rows
+        .filter(
+          (r) =>
+            r.word === randomRow.word &&
+            r.id !== randomRow.id &&
+            r.type === randomRow.type
+        )
+        .map(getTags)
+        .filter((v, i, a) => a.indexOf(v) === i) // deduplicate
+        .filter((v) => v !== getTags(randomRow)); // remove current row's label
+
       setAlternateRows(alternates);
       setFeedback("");
       setLoading(false);
@@ -72,19 +80,16 @@ export default function GrammarParser({ unit }) {
   const getTags = (row) => {
     if (!row) return "";
     if (row.type === "verb") {
-      const parts = [
-        row.tense,
-        row.voice,
-        row.mood_subtype,
-        row.person,
-        row.number,
-      ].filter((v) => v);
-      return parts.join(" ");
+      return [row.tense, row.voice, row.mood_subtype, row.person, row.number]
+        .filter((v) => v)
+        .join(" ");
     } else {
-      const parts = [row.case, row.gender, row.number].filter((v) => v);
-      return parts.join(" ");
+      return [row.case, row.gender, row.number].filter((v) => v).join(" ");
     }
   };
+
+  // Only truly different alternative parses
+  const validAlternatives = currentWordRow ? alternateRows : [];
 
   const checkAnswer = () => {
     if (!currentWordRow) return;
@@ -93,22 +98,23 @@ export default function GrammarParser({ unit }) {
       .map(([_, v]) => v.toLowerCase())
       .join(" ");
 
-    const validAlternatives = [currentWordRow, ...alternateRows].map(getTags);
+    const isCorrect =
+      userTags === getTags(currentWordRow).toLowerCase() ||
+      validAlternatives.some((v) => v.toLowerCase() === userTags);
 
-    const isCorrect = validAlternatives.some(
-      (v) => v.toLowerCase() === userTags
-    );
     setFeedback(
       isCorrect
         ? "✅ Correct!"
-        : `❌ Incorrect. Correct: ${validAlternatives.join(" OR ")}`
+        : `❌ Incorrect. Correct: ${[
+            getTags(currentWordRow),
+            ...validAlternatives,
+          ].join(" OR ")}`
     );
   };
 
   if (loading) return <p>Loading...</p>;
   if (!currentWordRow) return <p>No content for this unit.</p>;
 
-  // Options for selection
   const optionsToUse =
     currentWordRow.type === "verb"
       ? {
@@ -147,8 +153,7 @@ export default function GrammarParser({ unit }) {
         <strong>Target form:</strong> {getTags(currentWordRow)}
       </p>
       <p>
-        <strong>Valid alternatives:</strong>{" "}
-        {[currentWordRow, ...alternateRows].map(getTags).join(" OR ")}
+        <strong>Valid alternatives:</strong> {validAlternatives.join(" OR ")}
       </p>
 
       {Object.keys(optionsToUse).map((key) => (
