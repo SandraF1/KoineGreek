@@ -10,14 +10,13 @@ export default function GreekPronounsIntro() {
         example, instead of saying,
         <em> “My neighbour grows strawberries”</em>, we might say,
         <em> “He grows strawberries.”</em> <strong>He</strong>,{" "}
-        <strong>she</strong>
+        <strong>she </strong>
         and <strong>it</strong> are examples of{" "}
         <strong>personal pronouns</strong>.
       </p>
       <p>
-        In <strong>Koine Greek</strong>, personal pronouns also exist, and they
-        have <strong>number</strong>, <strong>grammatical gender</strong>, and
-        <strong>case</strong>.
+        In Koine Greek, personal pronouns exist as well, and have number and case,
+        and in the third person, also gender.
       </p>
     </div>
   );

@@ -7,37 +7,26 @@ export default function GrammarParser({ unit }) {
   const [feedback, setFeedback] = useState("");
   const [loading, setLoading] = useState(true);
 
-  const nounOptions = {
-    case: ["nominative", "accusative", "genitive", "dative"],
-    gender: ["masculine", "feminine", "neuter"],
-    number: ["singular", "plural"],
-  };
-
-  const verbOptions = {
-    tense: ["present", "past", "future"],
-    voice: ["active", "middle", "passive"],
-    mood_subtype: [
-      "indicative",
-      "subjunctive",
-      "imperative",
-      "infinitive",
-      "participle",
-    ],
-    person: ["1st", "2nd", "3rd"],
-    number: ["singular", "plural"],
-  };
-
-  const optionsToUse =
-    currentWordRow?.type === "verb" ? verbOptions : nounOptions;
-
   useEffect(() => {
     fetchWord();
   }, [unit]);
 
   useEffect(() => {
     if (!currentWordRow) return;
+
+    // Initialize selected fields based on word type
     const initial = {};
-    Object.keys(optionsToUse).forEach((k) => (initial[k] = null));
+    if (
+      currentWordRow.type === "noun" ||
+      currentWordRow.type === "pronoun" ||
+      currentWordRow.type === "relative-pronoun"
+    ) {
+      ["case", "gender", "number"].forEach((k) => (initial[k] = null));
+    } else if (currentWordRow.type === "verb") {
+      ["tense", "voice", "mood_subtype", "person", "number"].forEach(
+        (k) => (initial[k] = null)
+      );
+    }
     setSelected(initial);
     setFeedback("");
   }, [currentWordRow]);
@@ -47,34 +36,29 @@ export default function GrammarParser({ unit }) {
       setLoading(true);
       const res = await fetch(`http://localhost:5000/api/grammar?unit=${unit}`);
       const rows = await res.json();
-
       if (!rows || rows.length === 0) {
-        resetState();
+        setCurrentWordRow(null);
+        setAlternateRows([]);
+        setLoading(false);
         return;
       }
 
       const randomRow = rows[Math.floor(Math.random() * rows.length)];
       setCurrentWordRow(randomRow);
 
+      // Gather all DB rows that match the same word as valid alternatives
       const alternates = rows.filter(
-        (r) =>
-          r.word === randomRow.word &&
-          r.type === randomRow.type &&
-          r.id !== randomRow.id
+        (r) => r.word === randomRow.word && r.id !== randomRow.id
       );
       setAlternateRows(alternates);
       setFeedback("");
       setLoading(false);
     } catch (err) {
-      console.error("Fetch error:", err);
-      resetState();
+      console.error(err);
+      setCurrentWordRow(null);
+      setAlternateRows([]);
+      setLoading(false);
     }
-  };
-
-  const resetState = () => {
-    setCurrentWordRow(null);
-    setAlternateRows([]);
-    setLoading(false);
   };
 
   const handleSelect = (key, value) => {
@@ -87,91 +71,106 @@ export default function GrammarParser({ unit }) {
 
   const getTags = (row) => {
     if (!row) return "";
-
     if (row.type === "verb") {
-      const mood = row.mood_subtype ?? row.mood;
-      // Make person required — do not default to 2nd for imperatives
-      const person = row.person;
-
-      const parts = [row.tense, row.voice, mood, person, row.number].filter(
-        (v) => v !== undefined && v !== null
-      );
+      const parts = [
+        row.tense,
+        row.voice,
+        row.mood_subtype,
+        row.person,
+        row.number,
+      ].filter((v) => v);
       return parts.join(" ");
     } else {
-      const parts = [row.case, row.gender, row.number].filter(
-        (v) => v !== undefined && v !== null
-      );
+      const parts = [row.case, row.gender, row.number].filter((v) => v);
       return parts.join(" ");
     }
   };
 
-  const areTagsEqual = (a, b) => {
-    if (!a || !b) return false;
-    return a.trim().toLowerCase() === b.trim().toLowerCase();
-  };
-
   const checkAnswer = () => {
     if (!currentWordRow) return;
-
     const userTags = Object.entries(selected)
-      .filter(([_, v]) => Boolean(v))
+      .filter(([_, v]) => v)
       .map(([_, v]) => v.toLowerCase())
       .join(" ");
 
-    const validRows = [currentWordRow, ...alternateRows].map(getTags);
-    const isCorrect = validRows.some((rowStr) =>
-      areTagsEqual(userTags, rowStr)
-    );
-    const uniqueCorrect = [...new Set(validRows)];
+    const validAlternatives = [currentWordRow, ...alternateRows].map(getTags);
 
+    const isCorrect = validAlternatives.some(
+      (v) => v.toLowerCase() === userTags
+    );
     setFeedback(
       isCorrect
         ? "✅ Correct!"
-        : `❌ Incorrect. Correct: ${uniqueCorrect.join(" OR ")}`
+        : `❌ Incorrect. Correct: ${validAlternatives.join(" OR ")}`
     );
   };
 
   if (loading) return <p>Loading...</p>;
   if (!currentWordRow) return <p>No content for this unit.</p>;
 
+  // Options for selection
+  const optionsToUse =
+    currentWordRow.type === "verb"
+      ? {
+          tense: [
+            "present",
+            "imperfect",
+            "future",
+            "aorist",
+            "perfect",
+            "pluperfect",
+          ],
+          voice: ["active", "middle", "passive"],
+          mood_subtype: [
+            "indicative",
+            "subjunctive",
+            "optative",
+            "imperative",
+            "infinitive",
+            "participle",
+          ],
+          person: ["1st", "2nd", "3rd"],
+          number: ["singular", "plural"],
+        }
+      : {
+          case: ["nominative", "accusative", "genitive", "dative"],
+          gender: ["masculine", "feminine", "neuter"],
+          number: ["singular", "plural"],
+        };
+
   return (
     <div>
       <h2>
         {currentWordRow.word} ({currentWordRow.type})
       </h2>
-
       <p>
         <strong>Target form:</strong> {getTags(currentWordRow)}
       </p>
-
       <p>
-        <strong>Expected tags:</strong>{" "}
+        <strong>Valid alternatives:</strong>{" "}
         {[currentWordRow, ...alternateRows].map(getTags).join(" OR ")}
       </p>
 
       {Object.keys(optionsToUse).map((key) => (
         <div key={key} style={{ marginBottom: "8px" }}>
           <strong>{key.charAt(0).toUpperCase() + key.slice(1)}:</strong>{" "}
-          {optionsToUse[key].map((val) => {
-            const isSelected = selected[key] === val;
-            return (
-              <button
-                key={val}
-                onClick={() => handleSelect(key, val)}
-                style={{
-                  margin: "2px",
-                  padding: "4px 8px",
-                  border: "1px solid #333",
-                  borderRadius: "4px",
-                  cursor: "pointer",
-                  backgroundColor: isSelected ? "#4CAF50" : "#fff",
-                  color: isSelected ? "#fff" : "#000",
-                }}
-              >
-                {val}
-              </button>
-            );
-          })}
+          {optionsToUse[key].map((val) => (
+            <button
+              key={val}
+              onClick={() => handleSelect(key, val)}
+              style={{
+                margin: "2px",
+                padding: "4px 8px",
+                border: "1px solid #333",
+                borderRadius: "4px",
+                cursor: "pointer",
+                backgroundColor: selected[key] === val ? "#4CAF50" : "#fff",
+                color: selected[key] === val ? "#fff" : "#000",
+              }}
+            >
+              {val}
+            </button>
+          ))}
         </div>
       ))}
 

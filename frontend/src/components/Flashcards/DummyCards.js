@@ -139,21 +139,13 @@ export const unit4Flashcards = [
     definition: "spirit, wind, breath",
     example: "τὸ πνεῦμα ἅγιον ἐστίν. (the spirit is holy)",
   },
-  {
-    word: "λόγος",
-    definition: "word, reason, account",
-    example: "ὁ λόγος τοῦ διδασκάλου. (the word of the teacher)",
-  },
+
   {
     word: "χείρ",
     definition: "hand",
     example: "ἡ χείρ τοῦ ἀνθρώπου. (the hand of the man)",
   },
-  {
-    word: "θεός",
-    definition: "god, God",
-    example: "ὁ θεός τῶν ἐθνῶν. (the God of the nations)",
-  },
+
   {
     word: "σῶμα",
     definition: "body",
