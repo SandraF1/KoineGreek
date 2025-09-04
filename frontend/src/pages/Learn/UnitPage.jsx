@@ -102,7 +102,8 @@ const unitTitles = {
   2: "First declension nouns",
   3: "Second declension nouns, the vocative case and proper nouns",
   4: "Third declension nouns",
-  5: "Personal pronouns and relative pronouns"
+  5: "Personal pronouns and relative pronouns",
+  6: "More pronouns",
 };
 
 export default function UnitPage({ unitNumber }) {

@@ -21,6 +21,7 @@ export default function Learn({ unitIds, setUnitIds }) {
     { id: 3, name: "Unit 3", hasContent: true },
     { id: 4, name: "Unit 4", hasContent: true },
     { id: 5, name: "Unit 5", hasContent: true },
+    { id: 6, name: "Unit 6", hasContent: true },
   ];
 
   const allVocabCards = {
