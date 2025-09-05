@@ -29,7 +29,7 @@ export default function GrammarParser({ unit }) {
   const fetchWord = async () => {
     try {
       setLoading(true);
-      const res = await fetch(`http://localhost:5000/api/grammar?unit=${unit}`);
+      const res = await fetch(`https://koinegreek.onrender.com/api/grammar?unit=${unit}`);
       const rows = await res.json();
       if (!rows || rows.length === 0) {
         setCurrentWordRow(null);

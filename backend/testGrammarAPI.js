@@ -5,7 +5,7 @@ const testUnits = [1, 2, 3, 99]; // Include a non-existent unit for edge case
 
 const testGrammarFetch = async (unit) => {
   try {
-    const res = await fetch(`http://localhost:5000/api/grammar?unit=${unit}`);
+    const res = await fetch(`https://koinegreek.onrender.com/api/grammar?unit=${unit}`);
     const data = await res.json();
 
     console.log(`\nUnit ${unit}:`);

@@ -19,7 +19,7 @@ export default function QuizFlashcards({ unitIds }) {
 
     Promise.all(
       unitIds.map((id) =>
-        fetch(`http://localhost:5000/api/quiz/${id}`).then((res) => res.json())
+        fetch(`https://koinegreek.onrender.com/api/quiz/${id}`).then((res) => res.json())
       )
     )
       .then((data) => {
