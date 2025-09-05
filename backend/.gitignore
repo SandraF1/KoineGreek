@@ -1,1 +1,4 @@
 node_modules/
+
+# Allow databases to be committed
+!backend/db/*.db

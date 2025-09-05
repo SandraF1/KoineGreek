@@ -46,3 +46,6 @@ lerna-debug.log*
 Thumbs.db
 ehthumbs.db
 Desktop.ini
+
+# Allow databases to be committed
+!backend/db/*.db
