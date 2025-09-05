@@ -12,12 +12,10 @@ export default function PossessivePronominalAdjectives() {
               </h2>
 
               <p>
-                The possessive pronominal adjective is simply another way to
-                express possession, but without using the genitive pronouns.
-                Note that there are first and second possessive pronominal
-                adjectives, but not the third person. The Greek will use the
-                pronouns for the third person, so third person possessive
-                pronominal adjectives are not found in the Bible.
+                The possessive pronominal adjective expresses possession without
+                using the genitive pronouns. First and second person forms
+                exist; third person forms use regular pronouns in Greek and are
+                not found in the Bible.
               </p>
 
               <h6>Singular</h6>
@@ -25,24 +23,79 @@ export default function PossessivePronominalAdjectives() {
                 <thead>
                   <tr>
                     <th>Person</th>
+                    <th>Case</th>
                     <th>Masculine</th>
                     <th>Feminine</th>
                     <th>Neuter</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>1st Person</td>
-                    <td>ἐμός, ἐμοῦ, ἐμοί, ἐμόν</td>
-                    <td>ἐμή, ἐμῆς, ἐμῇ, ἐμήν</td>
-                    <td>ἐμόν, ἐμοῦ, ἐμοί, ἐμόν</td>
-                  </tr>
-                  <tr>
-                    <td>2nd Person</td>
-                    <td>σός, σοῦ, σοί, σόν</td>
-                    <td>σή, σῆς, σῇ, σήν</td>
-                    <td>σόν, σοῦ, σοί, σόν</td>
-                  </tr>
+                  {[
+                    {
+                      person: "1st Person",
+                      caseName: "Nominative",
+                      masc: "ἐμός",
+                      fem: "ἐμή",
+                      neut: "ἐμόν",
+                    },
+                    {
+                      person: "1st Person",
+                      caseName: "Genitive",
+                      masc: "ἐμοῦ",
+                      fem: "ἐμῆς",
+                      neut: "ἐμοῦ",
+                    },
+                    {
+                      person: "1st Person",
+                      caseName: "Dative",
+                      masc: "ἐμοί",
+                      fem: "ἐμῇ",
+                      neut: "ἐμοί",
+                    },
+                    {
+                      person: "1st Person",
+                      caseName: "Accusative",
+                      masc: "ἐμόν",
+                      fem: "ἐμήν",
+                      neut: "ἐμόν",
+                    },
+                    {
+                      person: "2nd Person",
+                      caseName: "Nominative",
+                      masc: "σός",
+                      fem: "σή",
+                      neut: "σόν",
+                    },
+                    {
+                      person: "2nd Person",
+                      caseName: "Genitive",
+                      masc: "σοῦ",
+                      fem: "σῆς",
+                      neut: "σοῦ",
+                    },
+                    {
+                      person: "2nd Person",
+                      caseName: "Dative",
+                      masc: "σοί",
+                      fem: "σῇ",
+                      neut: "σοί",
+                    },
+                    {
+                      person: "2nd Person",
+                      caseName: "Accusative",
+                      masc: "σόν",
+                      fem: "σήν",
+                      neut: "σόν",
+                    },
+                  ].map((row, index) => (
+                    <tr key={index}>
+                      <td>{row.person}</td>
+                      <td>{row.caseName}</td>
+                      <td>{row.masc}</td>
+                      <td>{row.fem}</td>
+                      <td>{row.neut}</td>
+                    </tr>
+                  ))}
                 </tbody>
               </table>
 
@@ -51,24 +104,79 @@ export default function PossessivePronominalAdjectives() {
                 <thead>
                   <tr>
                     <th>Person</th>
+                    <th>Case</th>
                     <th>Masculine</th>
                     <th>Feminine</th>
                     <th>Neuter</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>1st Person</td>
-                    <td>ἡμέτερος, ἡμετέρου, ἡμετέρῳ, ἡμέτερον</td>
-                    <td>ἡμετέρα, ἡμετέρας, ἡμετέρᾳ, ἡμετέραν</td>
-                    <td>ἡμέτερον, ἡμετέρου, ἡμετέρῳ, ἡμέτερον</td>
-                  </tr>
-                  <tr>
-                    <td>2nd Person</td>
-                    <td>ὑμέτερος, ὑμετέρου, ὑμετέρῳ, ὑμέτερον</td>
-                    <td>ὑμετέρα, ὑμετέρας, ὑμετέρᾳ, ὑμετέραν</td>
-                    <td>ὑμέτερον, ὑμετέρου, ὑμετέρῳ, ὑμέτερον</td>
-                  </tr>
+                  {[
+                    {
+                      person: "1st Person",
+                      caseName: "Nominative",
+                      masc: "ἡμέτερος",
+                      fem: "ἡμετέρα",
+                      neut: "ἡμέτερον",
+                    },
+                    {
+                      person: "1st Person",
+                      caseName: "Genitive",
+                      masc: "ἡμετέρου",
+                      fem: "ἡμετέρας",
+                      neut: "ἡμετέρου",
+                    },
+                    {
+                      person: "1st Person",
+                      caseName: "Dative",
+                      masc: "ἡμετέρῳ",
+                      fem: "ἡμετέρᾳ",
+                      neut: "ἡμετέρῳ",
+                    },
+                    {
+                      person: "1st Person",
+                      caseName: "Accusative",
+                      masc: "ἡμέτερον",
+                      fem: "ἡμετέραν",
+                      neut: "ἡμέτερον",
+                    },
+                    {
+                      person: "2nd Person",
+                      caseName: "Nominative",
+                      masc: "ὑμέτερος",
+                      fem: "ὑμετέρα",
+                      neut: "ὑμέτερον",
+                    },
+                    {
+                      person: "2nd Person",
+                      caseName: "Genitive",
+                      masc: "ὑμετέρου",
+                      fem: "ὑμετέρας",
+                      neut: "ὑμετέρου",
+                    },
+                    {
+                      person: "2nd Person",
+                      caseName: "Dative",
+                      masc: "ὑμετέρῳ",
+                      fem: "ὑμετέρᾳ",
+                      neut: "ὑμετέρῳ",
+                    },
+                    {
+                      person: "2nd Person",
+                      caseName: "Accusative",
+                      masc: "ὑμέτερον",
+                      fem: "ὑμετέραν",
+                      neut: "ὑμέτερον",
+                    },
+                  ].map((row, index) => (
+                    <tr key={index}>
+                      <td>{row.person}</td>
+                      <td>{row.caseName}</td>
+                      <td>{row.masc}</td>
+                      <td>{row.fem}</td>
+                      <td>{row.neut}</td>
+                    </tr>
+                  ))}
                 </tbody>
               </table>
             </div>

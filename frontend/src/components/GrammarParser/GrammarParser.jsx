@@ -14,13 +14,8 @@ export default function GrammarParser({ unit }) {
   useEffect(() => {
     if (!currentWordRow) return;
 
-    // Initialize selected fields based on word type
     const initial = {};
-    if (
-      currentWordRow.type === "noun" ||
-      currentWordRow.type === "pronoun" ||
-      currentWordRow.type === "relative-pronoun"
-    ) {
+    if (currentWordRow.type === "noun" || currentWordRow.type === "pronoun") {
       ["case", "gender", "number"].forEach((k) => (initial[k] = null));
     } else if (currentWordRow.type === "verb") {
       ["tense", "voice", "mood_subtype", "person", "number"].forEach(
@@ -46,7 +41,6 @@ export default function GrammarParser({ unit }) {
       const randomRow = rows[Math.floor(Math.random() * rows.length)];
       setCurrentWordRow(randomRow);
 
-      // Gather all DB rows with the same word as alternatives, deduplicated
       const alternates = rows
         .filter(
           (r) =>
@@ -55,8 +49,8 @@ export default function GrammarParser({ unit }) {
             r.type === randomRow.type
         )
         .map(getTags)
-        .filter((v, i, a) => a.indexOf(v) === i) // deduplicate
-        .filter((v) => v !== getTags(randomRow)); // remove current row's label
+        .filter((v, i, a) => a.indexOf(v) === i)
+        .filter((v) => v !== getTags(randomRow));
 
       setAlternateRows(alternates);
       setFeedback("");
@@ -81,14 +75,13 @@ export default function GrammarParser({ unit }) {
     if (!row) return "";
     if (row.type === "verb") {
       return [row.tense, row.voice, row.mood_subtype, row.person, row.number]
-        .filter((v) => v)
+        .filter(Boolean)
         .join(" ");
     } else {
-      return [row.case, row.gender, row.number].filter((v) => v).join(" ");
+      return [row.case, row.gender, row.number].filter(Boolean).join(" ");
     }
   };
 
-  // Only truly different alternative parses
   const validAlternatives = currentWordRow ? alternateRows : [];
 
   const checkAnswer = () => {
@@ -147,14 +140,17 @@ export default function GrammarParser({ unit }) {
   return (
     <div>
       <h2>
-        {currentWordRow.word} ({currentWordRow.type})
+        {currentWordRow.word} ({currentWordRow.type}
+        {currentWordRow.subtype ? ` — ${currentWordRow.subtype}` : ""})
       </h2>
       <p>
         <strong>Target form:</strong> {getTags(currentWordRow)}
       </p>
-      <p>
-        <strong>Valid alternatives:</strong> {validAlternatives.join(" OR ")}
-      </p>
+      {validAlternatives.length > 0 && (
+        <p>
+          <strong>Valid alternatives:</strong> {validAlternatives.join(" OR ")}
+        </p>
+      )}
 
       {Object.keys(optionsToUse).map((key) => (
         <div key={key} style={{ marginBottom: "8px" }}>
