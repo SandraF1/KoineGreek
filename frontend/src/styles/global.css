@@ -27,24 +27,22 @@ body {
   color: white;
   z-index: 9999;
   display: flex;
-  flex-wrap: wrap; /* wrap links */
+  flex-wrap: wrap; /* wrap links on small screens */
   align-items: center;
-  padding: 0.5rem 1rem; /* flexible vertical padding */
+  padding: 1rem; /* vertical + horizontal padding */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  width: 100%;
-  line-height: normal;
 }
 
 .navbar a {
   color: white;
   text-decoration: none;
   margin-right: 1rem;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.5rem; /* space for wrapping links */
   transition: color 0.2s ease;
 }
 
 .navbar a:hover {
-  color: #ffff00; /* yellow hover */
+  color: #ffff00; /* yellow on hover */
   text-decoration: underline;
 }
 
@@ -57,7 +55,7 @@ body {
    App Content
    ======================= */
 .app-content {
-  margin-top: calc(3rem + 2.5rem * var(--navbar-rows, 1));
+  padding-top: 140px; /* safe default to account for wrapped navbar */
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -190,8 +188,6 @@ label {
 /* =======================
    Responsive Adjustments
    ======================= */
-
-/* Set CSS variable for navbar rows */
 @media (max-width: 1024px) {
   html {
     font-size: 20px;
@@ -200,7 +196,7 @@ label {
     width: 260px;
   }
   .app-content {
-    --navbar-rows: 1;
+    padding-top: 150px;
   }
 }
 
@@ -235,7 +231,7 @@ label {
     min-width: unset;
   }
   .app-content {
-    --navbar-rows: 2;
+    padding-top: 160px;
   }
 }
 
@@ -247,10 +243,7 @@ label {
     font-size: 1rem;
     padding: 15px;
   }
-  .navbar a {
-    margin-right: 0.5rem;
-  }
   .app-content {
-    --navbar-rows: 3;
+    padding-top: 180px;
   }
 }
