@@ -30,7 +30,7 @@ export default function GrammarParser({ unit }) {
     try {
       setLoading(true);
       const res = await fetch(
-        `https://koinegreek.onrender.comapi/grammar?unit=${unit}`
+        `https://koinegreek.onrender.com/api/grammar?unit=${unit}`
       );
       const rows = await res.json();
       if (!rows || rows.length === 0) {
