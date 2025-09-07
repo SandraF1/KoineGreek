@@ -19,32 +19,44 @@ body {
 /* =======================
    Navbar
    ======================= */
+/* =======================
+   Navbar (Updated)
+   ======================= */
 .navbar {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  height: 56px;
-  background-color: #007bff;
+  background-color: #000000; /* black background */
   color: white;
   z-index: 9999;
   display: flex;
+  flex-wrap: wrap; /* allow links to wrap on small screens */
   align-items: center;
-  padding: 0 1rem;
+  padding: 0.5rem 1rem; /* vertical padding instead of fixed height */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   width: 100%;
+  line-height: normal; /* prevent text cutting off */
 }
 
 .navbar a {
-  color: white;
+  color: white; /* normal text */
   text-decoration: none;
   margin-right: 1rem;
+  margin-bottom: 0.5rem; /* spacing for wrapped links */
+  transition: color 0.2s ease;
 }
 
 .navbar a:hover {
   text-decoration: underline;
+  color: #ffff00; /* yellow on hover */
 }
 
+/* Selected / active page link */
+.navbar a.active {
+  color: #ffff00; /* yellow for active page */
+  font-weight: bold;
+}
 /* =======================
    App Content
    ======================= */
