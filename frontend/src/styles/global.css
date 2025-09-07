@@ -13,14 +13,11 @@ body {
   color: #333;
   background-color: #f9f9f9;
   margin: 0;
-  padding-top: 70px; /* default navbar spacing */
+  padding-top: 70px; /* space for fixed navbar */
 }
 
 /* =======================
    Navbar
-   ======================= */
-/* =======================
-   Navbar (Updated)
    ======================= */
 .navbar {
   position: fixed;
@@ -31,7 +28,7 @@ body {
   color: white;
   z-index: 9999;
   display: flex;
-  flex-wrap: wrap; /* allow links to wrap on small screens */
+  flex-wrap: wrap; /* allow links to wrap */
   align-items: center;
   padding: 0.5rem 1rem; /* vertical padding instead of fixed height */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -40,10 +37,10 @@ body {
 }
 
 .navbar a {
-  color: white; /* normal text */
+  color: white;
   text-decoration: none;
   margin-right: 1rem;
-  margin-bottom: 0.5rem; /* spacing for wrapped links */
+  margin-bottom: 0.5rem;
   transition: color 0.2s ease;
 }
 
@@ -52,16 +49,16 @@ body {
   color: #ffff00; /* yellow on hover */
 }
 
-/* Selected / active page link */
 .navbar a.active {
-  color: #ffff00; /* yellow for active page */
+  color: #ffff00; /* yellow active page */
   font-weight: bold;
 }
+
 /* =======================
    App Content
    ======================= */
 .app-content {
-  padding-top: calc(56px + 1.5rem);
+  padding-top: calc(70px + 1rem); /* account for fixed navbar */
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -91,9 +88,9 @@ body {
 }
 
 .section-buttons button.active {
-  border: 2px solid #007bff;
-  background-color: #007bff;
-  color: white;
+  border: 2px solid #ffff00;
+  background-color: #000000; /* keep black background for selected */
+  color: #ffff00; /* yellow text for selected */
 }
 
 /* =======================
@@ -104,7 +101,7 @@ body {
   flex-wrap: wrap;
   gap: 12px;
   justify-content: flex-start;
-  align-items: stretch; /* make all cards same height */
+  align-items: stretch; /* equal height */
 }
 
 /* =======================
@@ -132,6 +129,7 @@ body {
 .flashcard-front {
   font-weight: bold;
 }
+
 .flashcard-back {
   color: #333;
 }
@@ -206,8 +204,8 @@ label {
     font-size: 16px;
   }
   body {
-    padding-top: 90px;
-  }
+    padding-top: 110px;
+  } /* allow space for wrapped navbar */
 
   h1 {
     font-size: 1.5rem;
@@ -243,8 +241,8 @@ label {
     font-size: 14px;
   }
   body {
-    padding-top: 100px;
-  }
+    padding-top: 130px;
+  } /* small phones */
   .flashcard {
     font-size: 1rem;
     padding: 15px;
