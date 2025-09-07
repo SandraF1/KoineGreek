@@ -1,225 +1,73 @@
 /* =======================
-   Base styles
+   Responsive adjustments
    ======================= */
 
-html {
-  font-size: 24px;
-  overflow-y: scroll; /* default is 16px, increase for bigger text everywhere */
+/* Tablets and below */
+@media (max-width: 1024px) {
+  html {
+    font-size: 20px; /* slightly smaller */
+  }
+
+  body {
+    padding-top: 50px;
+  }
+
+  .flashcard {
+    max-width: 260px;
+  }
 }
 
-body {
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  font-size: 16px; /* Base font size for readable text */
-  line-height: 1.6; /* Comfortable spacing */
-  color: #333;
-  background-color: #f9f9f9;
-  margin: 0;
-  padding-top: 56px;
+/* Phones and small tablets */
+@media (max-width: 768px) {
+  html {
+    font-size: 16px; /* reduce base size for readability */
+  }
+
+  body {
+    padding-top: 48px;
+    line-height: 1.5;
+  }
+
+  h1 { font-size: 1.5rem; }
+  h2 { font-size: 1.3rem; }
+  h3 { font-size: 1.2rem; }
+  h4, h5, h6 { font-size: 1rem; }
+
+  .flashcard {
+    width: 100%;
+    max-width: 280px;
+    margin: 10px auto;
+  }
+
+  .section-buttons {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .section-buttons button {
+    width: 100%;
+  }
+
+  /* Tables scroll instead of shrinking */
+  table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
 }
 
-/* =======================
-   Headings
-   ======================= */
-h1 {
-  font-size: 2rem;
-  margin-bottom: 1rem;
-}
-h2 {
-  font-size: 1.75rem;
-  margin-bottom: 0.9rem;
-}
-h3 {
-  font-size: 1.5rem;
-  margin-bottom: 0.8rem;
-}
-h4 {
-  font-size: 1.25rem;
-  margin-bottom: 0.7rem;
-}
-h5 {
-  font-size: 1rem;
-  margin-bottom: 0.6rem;
-}
-h6 {
-  font-size: 0.875rem;
-  margin-bottom: 0.5rem;
-}
+/* Very small devices (phones in portrait) */
+@media (max-width: 480px) {
+  html {
+    font-size: 14px;
+  }
 
-/* =======================
-   Paragraphs, links, lists
-   ======================= */
-p,
-li,
-span,
-a {
-  font-size: 1rem; /* Normal readable text */
-  line-height: 1.6;
-}
+  .navbar a {
+    margin-right: 0.5rem;
+  }
 
-/* =======================
-   Buttons
-   ======================= */
-button,
-.btn {
-  font-size: 1rem; /* match normal text */
-  padding: 0.5rem 1rem;
-}
-
-/* =======================
-   Navbar
-   ======================= */
-.navbar {
-  background-color: #007bff;
-  color: white;
-}
-.navbar a {
-  color: white;
-  text-decoration: none;
-  margin-right: 1rem;
-}
-.navbar a:hover {
-  text-decoration: underline;
-}
-
-/* =======================
-   Footer
-   ======================= */
-.footer {
-  background-color: #343a40;
-  color: white;
-  padding: 1rem;
-  text-align: center;
-}
-
-/* =======================
-   Page content spacing
-   ======================= */
-.app-content {
-  padding: 2rem;
-}
-
-/* =======================
-   Utility (optional)
-   ======================= */
-.text-center {
-  text-align: center;
-}
-.text-muted {
-  color: #6c757d;
-}
-
-/* Section buttons container */
-.section-buttons {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 20px;
-}
-
-/* Default button style */
-.section-buttons button {
-  padding: 0.5rem 1rem;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  background-color: #f9f9f9;
-  color: black;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-/* Active/selected button style */
-.section-buttons button.active {
-  border: 2px solid #007bff;
-  background-color: #007bff;
-  color: white;
-}
-
-/* Active section button highlight */
-button.active-section-btn {
-  background-color: #007bff;
-  color: white;
-  border: 2px solid #0056b3;
-}
-/* Table cells and headers */
-table {
-  font-size: 1rem; /* base size, adjust as needed */
-}
-
-table th,
-table td {
-  font-size: 1rem; /* increase text inside cells */
-  padding: 0.75rem; /* optional: more spacing */
-}
-
-/* Make radio buttons and checkboxes larger */
-input[type="radio"],
-input[type="checkbox"] {
-  transform: scale(1.5); /* increase the circle/box size */
-  margin-right: 0.5rem;
-}
-
-/* Make all labels bigger */
-label {
-  font-size: 1.2rem !important; /* larger text for readability */
-  line-height: 1.5;
-  cursor: pointer;
-}
-
-/* Optional: ensure spacing in groups */
-.radio-group label,
-.checkbox-group label {
-  display: flex;
-  align-items: center;
-  margin-bottom: 0.5rem;
-}
-
-/* Adjust alignment if input is inside label */
-label input[type="radio"],
-label input[type="checkbox"] {
-  margin-right: 0.5rem;
-  transform: scale(1.5);
-}
-
-.flashcard {
-  border: 2px solid #007bff;
-  border-radius: 10px;
-  background-color: #f0f8ff;
-  width: 300px;
-  min-height: 120px;
-  padding: 20px;
-  margin: 12px;
-  font-size: 1.2rem;
-  text-align: center;
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  transition: transform 0.2s ease;
-}
-
-.flashcard:hover {
-  transform: scale(1.05);
-}
-
-.flashcard-back {
-  color: #333;
-}
-
-.flashcard-front {
-  font-weight: bold;
-}
-
-/* src/styles/global.css or Navbar.css */
-.active-link {
-  font-weight: bold;
-  text-decoration: underline;
-}
-
-.highlight {
-  background-color: #ffff00;
-  padding: 0 2px;
-  border-radius: 2px;
-}
-
-.caption-black {
-  color: black;
+  .flashcard {
+    padding: 15px;
+    font-size: 1rem;
+  }
 }
