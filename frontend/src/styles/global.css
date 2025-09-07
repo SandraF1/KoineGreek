@@ -2,7 +2,7 @@
    Navbar
    ======================= */
 .navbar {
-  position: sticky; /* sticks at top but allows content flow */
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
@@ -10,52 +10,59 @@
   color: white;
   z-index: 9999;
   display: flex;
-  flex-wrap: wrap; /* wrap links on small screens */
+  flex-wrap: wrap; /* allow links to wrap */
   align-items: center;
-  padding: 1rem; /* vertical + horizontal padding */
+  padding: 1rem 1rem; /* vertical + horizontal padding */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  line-height: normal; /* avoid text cutting off */
 }
 
 .navbar a {
   color: white;
   text-decoration: none;
   margin-right: 1rem;
-  margin-bottom: 0.5rem; /* space for wrapped links */
+  margin-bottom: 0.5rem; /* spacing for wrap */
   transition: color 0.2s ease;
 }
 
 .navbar a:hover {
-  color: #ffff00; /* yellow on hover */
+  color: #ffff00; /* yellow hover */
   text-decoration: underline;
 }
 
 .navbar a.active {
-  color: #ffff00; /* yellow active page */
+  color: #ffff00; /* yellow selected */
   font-weight: bold;
 }
 
 /* =======================
    App Content
    ======================= */
-/* use margin-top to clear navbar height dynamically */
 .app-content {
-  margin-top: calc(1rem + 2rem); /* base navbar padding + extra spacing */
+  padding-top: 5rem; /* default space for navbar */
   display: flex;
   flex-direction: column;
   gap: 1rem;
 }
 
 /* =======================
-   Mobile Adjustments for Navbar Wrapping
+   Mobile & Tablet Adjustments
    ======================= */
+@media (max-width: 1024px) {
+  .app-content {
+    padding-top: 6rem; /* extra space for wrapped navbar */
+  }
+}
+
 @media (max-width: 768px) {
   .app-content {
-    margin-top: 8rem; /* more space for wrapped navbar */
+    padding-top: 8rem; /* wrapped navbar + spacing */
   }
 }
 
 @media (max-width: 480px) {
   .app-content {
-    margin-top: 10rem; /* space for 2-3 line navbar */
+    padding-top: 10rem; /* 2-3 line navbar + spacing */
   }
 }
