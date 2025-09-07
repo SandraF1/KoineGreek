@@ -23,34 +23,33 @@ body {
   top: 0;
   left: 0;
   right: 0;
-  background-color: #000000;
+  background-color: #000000; /* black background */
   color: white;
   z-index: 9999;
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: wrap; /* wrap links on small screens */
   align-items: center;
-  padding: 1rem;
+  padding: 1rem; /* vertical + horizontal padding */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   width: 100%;
   line-height: normal;
-  height: 64px; /* fixed height for desktop */
 }
 
 .navbar a {
   color: white;
   text-decoration: none;
   margin-right: 1rem;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.5rem; /* spacing for wrapped links */
   transition: color 0.2s ease;
 }
 
 .navbar a:hover {
-  color: #ffff00;
+  color: #ffff00; /* yellow hover */
   text-decoration: underline;
 }
 
 .navbar a.active {
-  color: #ffff00;
+  color: #ffff00; /* yellow selected page */
   font-weight: bold;
 }
 
@@ -58,15 +57,10 @@ body {
    App Content
    ======================= */
 .app-content {
-  padding-top: 64px; /* match navbar height */
+  padding-top: 6rem; /* default space for navbar */
   display: flex;
   flex-direction: column;
   gap: 1rem;
-}
-
-/* Prevent heading from being clipped */
-.app-content h1:first-child {
-  margin-top: 1rem;
 }
 
 /* =======================
@@ -94,8 +88,8 @@ body {
 
 .section-buttons button.active {
   border: 2px solid #ffff00;
-  background-color: #000000;
-  color: #ffff00;
+  background-color: #000000; /* black background for selected */
+  color: #ffff00; /* yellow text for selected */
 }
 
 /* =======================
@@ -106,7 +100,7 @@ body {
   flex-wrap: wrap;
   gap: 12px;
   justify-content: flex-start;
-  align-items: stretch;
+  align-items: stretch; /* equal height */
 }
 
 /* =======================
@@ -116,7 +110,7 @@ body {
   border: 2px solid #007bff;
   border-radius: 10px;
   background-color: #f0f8ff;
-  width: 280px;
+  width: 280px; /* consistent width */
   padding: 20px;
   display: flex;
   flex-direction: column;
@@ -176,7 +170,7 @@ label {
 }
 
 /* =======================
-   Background Cards
+   Background Cards (Vocab / Grammar / Quiz Bank)
    ======================= */
 .unit-background-card {
   display: flex;
@@ -184,7 +178,7 @@ label {
   align-items: center;
   justify-content: flex-start;
   width: 100%;
-  max-width: 900px;
+  max-width: 900px; /* consistent width */
   margin: 0 auto 20px auto;
   padding: 20px;
   background-color: #e6f2ff;
@@ -199,18 +193,11 @@ label {
   html {
     font-size: 20px;
   }
-
-  .navbar {
-    height: auto;
-    padding: 1.5rem 1rem;
-  }
-
-  .app-content {
-    padding-top: 100px;
-  }
-
   .flashcard {
     width: 260px;
+  }
+  .app-content {
+    padding-top: 8rem; /* taller navbar if links wrap */
   }
 }
 
@@ -218,42 +205,35 @@ label {
   html {
     font-size: 16px;
   }
-
   h1 {
     font-size: 1.5rem;
   }
-
   h2 {
     font-size: 1.3rem;
   }
-
   h3 {
     font-size: 1.2rem;
   }
-
   h4,
   h5,
   h6 {
     font-size: 1rem;
   }
 
-  .app-content {
-    padding-top: 120px;
-  }
-
   .flashcard {
     width: 100%;
     max-width: 280px;
   }
-
   .section-buttons {
     flex-direction: column;
     gap: 8px;
   }
-
   .section-buttons button {
     width: 100%;
     min-width: unset;
+  }
+  .app-content {
+    padding-top: 10rem; /* wrapped navbar + spacing */
   }
 }
 
@@ -261,17 +241,14 @@ label {
   html {
     font-size: 14px;
   }
-
-  .app-content {
-    padding-top: 140px;
-  }
-
   .flashcard {
     font-size: 1rem;
     padding: 15px;
   }
-
   .navbar a {
     margin-right: 0.5rem;
+  }
+  .app-content {
+    padding-top: 12rem; /* extra space for multi-line navbar */
   }
 }
