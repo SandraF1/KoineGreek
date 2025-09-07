@@ -27,9 +27,9 @@ body {
   color: white;
   z-index: 9999;
   display: flex;
-  flex-wrap: wrap; /* allow links to wrap on small screens */
+  flex-wrap: wrap; /* wrap links */
   align-items: center;
-  padding: 0.5rem 1rem; /* vertical padding instead of fixed height */
+  padding: 0.5rem 1rem; /* flexible vertical padding */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   width: 100%;
   line-height: normal;
@@ -44,8 +44,8 @@ body {
 }
 
 .navbar a:hover {
+  color: #ffff00; /* yellow hover */
   text-decoration: underline;
-  color: #ffff00; /* yellow on hover */
 }
 
 .navbar a.active {
@@ -57,23 +57,10 @@ body {
    App Content
    ======================= */
 .app-content {
-  padding-top: 3.5rem; /* desktop spacing for navbar */
+  margin-top: calc(3rem + 2.5rem * var(--navbar-rows, 1));
   display: flex;
   flex-direction: column;
   gap: 1rem;
-}
-
-/* Adjust spacing for small tablets / mobile */
-@media (max-width: 768px) {
-  .app-content {
-    padding-top: 7rem; /* space for navbar wrapping two lines */
-  }
-}
-
-@media (max-width: 480px) {
-  .app-content {
-    padding-top: 9rem; /* extra padding for multi-line navbar */
-  }
 }
 
 /* =======================
@@ -101,8 +88,8 @@ body {
 
 .section-buttons button.active {
   border: 2px solid #ffff00;
-  background-color: #000000; /* black background for selected */
-  color: #ffff00; /* yellow text for selected */
+  background-color: #000000;
+  color: #ffff00;
 }
 
 /* =======================
@@ -113,7 +100,7 @@ body {
   flex-wrap: wrap;
   gap: 12px;
   justify-content: flex-start;
-  align-items: stretch; /* equal height */
+  align-items: stretch;
 }
 
 /* =======================
@@ -123,7 +110,8 @@ body {
   border: 2px solid #007bff;
   border-radius: 10px;
   background-color: #f0f8ff;
-  width: 280px; /* consistent width */
+  width: 280px;
+  min-height: 140px;
   padding: 20px;
   display: flex;
   flex-direction: column;
@@ -183,7 +171,7 @@ label {
 }
 
 /* =======================
-   Background Cards (Vocab / Grammar / Quiz Bank)
+   Background Cards
    ======================= */
 .unit-background-card {
   display: flex;
@@ -191,7 +179,7 @@ label {
   align-items: center;
   justify-content: flex-start;
   width: 100%;
-  max-width: 900px; /* consistent width */
+  max-width: 900px;
   margin: 0 auto 20px auto;
   padding: 20px;
   background-color: #e6f2ff;
@@ -202,12 +190,17 @@ label {
 /* =======================
    Responsive Adjustments
    ======================= */
+
+/* Set CSS variable for navbar rows */
 @media (max-width: 1024px) {
   html {
     font-size: 20px;
   }
   .flashcard {
     width: 260px;
+  }
+  .app-content {
+    --navbar-rows: 1;
   }
 }
 
@@ -229,7 +222,6 @@ label {
   h6 {
     font-size: 1rem;
   }
-
   .flashcard {
     width: 100%;
     max-width: 280px;
@@ -241,6 +233,9 @@ label {
   .section-buttons button {
     width: 100%;
     min-width: unset;
+  }
+  .app-content {
+    --navbar-rows: 2;
   }
 }
 
@@ -254,5 +249,8 @@ label {
   }
   .navbar a {
     margin-right: 0.5rem;
+  }
+  .app-content {
+    --navbar-rows: 3;
   }
 }
