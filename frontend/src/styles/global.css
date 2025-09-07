@@ -33,7 +33,7 @@ body {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   width: 100%;
   line-height: normal;
-  min-height: 80px; /* ensures enough space for wrapped links */
+  height: 64px; /* fixed height for desktop */
 }
 
 .navbar a {
@@ -58,13 +58,13 @@ body {
    App Content
    ======================= */
 .app-content {
-  padding-top: 100px; /* clears navbar height */
+  padding-top: 64px; /* match navbar height */
   display: flex;
   flex-direction: column;
   gap: 1rem;
 }
 
-/* Ensure first heading is never clipped */
+/* Prevent heading from being clipped */
 .app-content h1:first-child {
   margin-top: 1rem;
 }
@@ -199,11 +199,18 @@ label {
   html {
     font-size: 20px;
   }
+
+  .navbar {
+    height: auto;
+    padding: 1.5rem 1rem;
+  }
+
+  .app-content {
+    padding-top: 100px;
+  }
+
   .flashcard {
     width: 260px;
-  }
-  .app-content {
-    padding-top: 120px;
   }
 }
 
@@ -211,35 +218,42 @@ label {
   html {
     font-size: 16px;
   }
+
   h1 {
     font-size: 1.5rem;
   }
+
   h2 {
     font-size: 1.3rem;
   }
+
   h3 {
     font-size: 1.2rem;
   }
+
   h4,
   h5,
   h6 {
     font-size: 1rem;
   }
 
+  .app-content {
+    padding-top: 120px;
+  }
+
   .flashcard {
     width: 100%;
     max-width: 280px;
   }
+
   .section-buttons {
     flex-direction: column;
     gap: 8px;
   }
+
   .section-buttons button {
     width: 100%;
     min-width: unset;
-  }
-  .app-content {
-    padding-top: 140px;
   }
 }
 
@@ -247,14 +261,17 @@ label {
   html {
     font-size: 14px;
   }
+
+  .app-content {
+    padding-top: 140px;
+  }
+
   .flashcard {
     font-size: 1rem;
     padding: 15px;
   }
+
   .navbar a {
     margin-right: 0.5rem;
-  }
-  .app-content {
-    padding-top: 160px;
   }
 }
