@@ -23,7 +23,7 @@ body {
   top: 0;
   left: 0;
   right: 0;
-  background-color: #000000;
+  background-color: #000;
   color: white;
   z-index: 9999;
   display: flex;
@@ -58,7 +58,7 @@ body {
    App Content
    ======================= */
 .app-content {
-  padding-top: 85px;
+  padding-top: 90px; /* enough offset for fixed navbar */
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -69,7 +69,7 @@ body {
    ======================= */
 .section-buttons {
   display: flex;
-  flex-wrap: nowrap;
+  flex-wrap: nowrap; /* keep inline on desktop */
   gap: 10px;
   margin-bottom: 20px;
   justify-content: flex-start;
@@ -77,8 +77,8 @@ body {
 
 .section-buttons button {
   flex: 0 0 auto;
-  min-width: 160px; /* longer Voc button */
-  max-width: 240px;
+  min-width: 140px;
+  max-width: 220px;
   padding: 0.5rem 1rem;
   border-radius: 5px;
   border: 1px solid #ccc;
@@ -86,7 +86,7 @@ body {
   color: black;
   cursor: pointer;
   text-align: center;
-  white-space: nowrap;
+  white-space: nowrap; /* default inline */
   overflow: hidden;
   text-overflow: ellipsis;
   transition: all 0.2s ease;
@@ -98,9 +98,14 @@ body {
   color: #ffff00;
 }
 
-/* Specific Voc Flashcards button */
+/* =======================
+   Voc Flashcards Button Fix
+   ======================= */
 #voc-flashcards-btn {
-  min-width: 200px;
+  min-width: 200px !important;
+  white-space: normal !important; /* allow wrapping */
+  overflow: visible !important;
+  text-overflow: unset !important;
 }
 
 /* =======================
@@ -185,26 +190,33 @@ body {
   html {
     font-size: 16px;
   }
+
   h1.learn-title {
     font-size: 1.5rem;
+    margin-bottom: 0.75rem;
   }
 
   .section-buttons {
-    flex-wrap: wrap;
+    flex-wrap: wrap; /* allow wrapping on mobile */
     justify-content: center;
   }
 
   .section-buttons button {
-    flex: 1 1 100%;
+    flex: 1 1 100%; /* full width */
     min-width: unset;
     max-width: unset;
-    white-space: normal;
+    white-space: normal; /* wrap text */
     overflow: visible;
     text-overflow: unset;
+    margin-bottom: 8px; /* spacing between buttons */
   }
 
   .app-content {
-    padding-top: 65px;
+    padding-top: 100px; /* more offset so Learn title is not cut */
+  }
+
+  .unit-selector-wrapper {
+    height: auto; /* adjust height on mobile */
   }
 }
 
@@ -220,6 +232,6 @@ body {
     margin-right: 0.5rem;
   }
   .app-content {
-    padding-top: 70px;
+    padding-top: 110px; /* extra offset for multi-line navbar */
   }
 }
