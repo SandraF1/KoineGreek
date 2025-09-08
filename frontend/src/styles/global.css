@@ -103,9 +103,12 @@ body {
    ======================= */
 #voc-flashcards-btn {
   min-width: 200px !important;
-  white-space: normal !important; /* allow wrapping */
+  max-width: 200px !important; /* lock width */
+  white-space: normal !important;
   overflow: visible !important;
   text-overflow: unset !important;
+  word-break: break-word !important; /* wrap long words */
+  text-align: center;
 }
 
 /* =======================
