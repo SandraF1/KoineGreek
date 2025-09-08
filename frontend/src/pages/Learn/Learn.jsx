@@ -137,7 +137,7 @@ export default function Learn({ unitIds, setUnitIds }) {
         ].map((s) => (
           <Button
             key={s.key}
-            className={activeSection === s.key ? "active" : ""}
+            className={`btn-wrap ${activeSection === s.key ? "active" : ""}`}
             onClick={() => handleSectionClick(s.key)}
           >
             {s.label}
