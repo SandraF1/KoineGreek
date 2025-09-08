@@ -79,17 +79,18 @@ body {
 .section-buttons button {
   padding: 0.5rem 1rem;
   border-radius: 5px;
-  border: 1px solid #ccc;
+  border: 2px solid transparent; /* keep thickness same for all buttons */
   background-color: #f9f9f9;
   color: black;
   cursor: pointer;
   transition: all 0.2s ease;
   flex: 1 1 auto;
   min-width: 80px;
+  box-sizing: border-box; /* ensures border doesn't change size */
 }
 
 .section-buttons button.active {
-  border: 2px solid #ffff00;
+  border-color: #ffff00; /* only change color, not thickness */
   background-color: #000000;
   color: #ffff00;
 }
