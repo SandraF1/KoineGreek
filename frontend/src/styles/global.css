@@ -67,6 +67,9 @@ body {
 /* =======================
    Section Buttons
    ======================= */
+/* =======================
+   Section Buttons
+   ======================= */
 .section-buttons {
   display: flex;
   flex-wrap: nowrap; /* keep inline on desktop */
@@ -86,10 +89,13 @@ body {
   color: black;
   cursor: pointer;
   text-align: center;
-  white-space: nowrap; /* default inline */
-  overflow: hidden;
-  text-overflow: ellipsis;
-  transition: all 0.2s ease;
+
+  /* ✅ Full text, no ellipsis, wrap if needed */
+  white-space: normal;
+  overflow: visible;
+  text-overflow: unset;
+  word-wrap: break-word;
+  line-height: 1.3;
 }
 
 .section-buttons button.active {
