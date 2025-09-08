@@ -31,7 +31,6 @@ body {
   align-items: center;
   padding: 1rem;
   width: 100%;
-  line-height: normal;
   height: auto;
   box-sizing: border-box;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -59,7 +58,7 @@ body {
    App Content
    ======================= */
 .app-content {
-  padding-top: 85px; /* offset for fixed navbar on desktop */
+  padding-top: 85px;
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -70,26 +69,26 @@ body {
    ======================= */
 .section-buttons {
   display: flex;
-  flex-wrap: nowrap; /* no wrap on desktop */
+  flex-wrap: nowrap;
   gap: 10px;
   margin-bottom: 20px;
   justify-content: flex-start;
 }
 
 .section-buttons button {
-  flex: 0 0 auto; /* width depends on content but does not shrink/grow dynamically */
-  min-width: 140px; /* ensures button never too small */
-  max-width: 220px; /* optional maximum width */
-  padding: 0.5rem 0.75rem;
+  flex: 0 0 auto;
+  min-width: 160px; /* longer Voc button */
+  max-width: 240px;
+  padding: 0.5rem 1rem;
   border-radius: 5px;
   border: 1px solid #ccc;
   background-color: #f9f9f9;
   color: black;
   cursor: pointer;
   text-align: center;
-  white-space: nowrap; /* keep text on one line */
-  overflow: hidden; /* hide excess text */
-  text-overflow: ellipsis; /* add ... if text exceeds max width */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   transition: all 0.2s ease;
 }
 
@@ -99,15 +98,9 @@ body {
   color: #ffff00;
 }
 
-/* =======================
-   Flashcards Container
-   ======================= */
-.flashcards-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  justify-content: flex-start;
-  align-items: stretch;
+/* Specific Voc Flashcards button */
+#voc-flashcards-btn {
+  min-width: 200px;
 }
 
 /* =======================
@@ -126,55 +119,34 @@ body {
   font-size: 1.2rem;
   cursor: pointer;
   transition: transform 0.2s ease;
-  word-break: break-word; /* prevent overflow inside card */
+  word-break: break-word;
 }
 
 .flashcard:hover {
   transform: scale(1.05);
 }
 
-.flashcard-front {
-  font-weight: bold;
-}
-
-.flashcard-back {
-  color: #333;
+/* =======================
+   Unit Selector
+   ======================= */
+.unit-selector-wrapper {
+  height: 60px;
 }
 
 /* =======================
-   Tables
+   Content Area
    ======================= */
-table {
-  font-size: 1rem;
-  width: 100%;
+.content-area {
+  min-height: 500px;
+  position: relative;
 }
 
-table th,
-table td {
-  font-size: 1rem;
-  padding: 0.75rem;
-}
-
-/* =======================
-   Forms
-   ======================= */
-input[type="radio"],
-input[type="checkbox"] {
-  transform: scale(1.5);
-  margin-right: 0.5rem;
-}
-
-label {
-  font-size: 1.2rem !important;
-  line-height: 1.5;
-  cursor: pointer;
-}
-
-.radio-group label,
-.checkbox-group label {
-  display: flex;
-  align-items: center;
-  margin-bottom: 0.5rem;
+.select-unit-message {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #6c757d;
 }
 
 /* =======================
@@ -205,7 +177,7 @@ label {
     width: 260px;
   }
   .app-content {
-    padding-top: 75px; /* smaller navbar height */
+    padding-top: 75px;
   }
 }
 
@@ -213,27 +185,17 @@ label {
   html {
     font-size: 16px;
   }
-  h1 {
+  h1.learn-title {
     font-size: 1.5rem;
-  }
-  h2 {
-    font-size: 1.3rem;
-  }
-  h3 {
-    font-size: 1.2rem;
-  }
-  h4,
-  h5,
-  h6 {
-    font-size: 1rem;
   }
 
   .section-buttons {
-    flex-wrap: wrap; /* allow wrapping on mobile */
+    flex-wrap: wrap;
     justify-content: center;
   }
+
   .section-buttons button {
-    flex: 1 1 100%; /* full width on mobile */
+    flex: 1 1 100%;
     min-width: unset;
     max-width: unset;
     white-space: normal;
@@ -242,7 +204,7 @@ label {
   }
 
   .app-content {
-    padding-top: 65px; /* mobile navbar height */
+    padding-top: 65px;
   }
 }
 
@@ -258,6 +220,6 @@ label {
     margin-right: 0.5rem;
   }
   .app-content {
-    padding-top: 70px; /* extra for multi-line navbar */
+    padding-top: 70px;
   }
 }

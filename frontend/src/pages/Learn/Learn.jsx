@@ -10,6 +10,8 @@ import {
   unit4Flashcards,
 } from "../../components/Flashcards/DummyCards";
 
+import "./Learn.css"; // Import the new CSS
+
 export default function Learn({ unitIds, setUnitIds }) {
   const [activeSection, setActiveSection] = useState("lesson");
   const [selectedUnit, setSelectedUnit] = useState(1);
@@ -91,6 +93,7 @@ export default function Learn({ unitIds, setUnitIds }) {
         </Card.Body>
         <Card.Footer>
           <Button
+            id="voc-flashcards-btn"
             variant="primary"
             onClick={(e) => {
               e.stopPropagation();
@@ -107,7 +110,7 @@ export default function Learn({ unitIds, setUnitIds }) {
 
   return (
     <Container className="my-4 app-content">
-      <h1 className="mb-3">Learn</h1>
+      <h1 className="mb-3 learn-title">Learn</h1>
 
       {/* Section buttons */}
       <div className="section-buttons">
@@ -128,7 +131,7 @@ export default function Learn({ unitIds, setUnitIds }) {
       </div>
 
       {/* Unit selector */}
-      <div className="mb-3" style={{ height: "60px" }}>
+      <div className="unit-selector-wrapper mb-3">
         <UnitSelector
           units={allUnits}
           selectedUnits={activeSection === "lesson" ? [selectedUnit] : unitIds}
@@ -142,23 +145,13 @@ export default function Learn({ unitIds, setUnitIds }) {
       </div>
 
       {/* Content area */}
-      <div
-        className="p-3 border rounded bg-light position-relative"
-        style={{ minHeight: "500px" }}
-      >
+      <div className="content-area p-3 border rounded bg-light">
         {activeSection === "lesson" && selectedUnit && (
           <UnitPage unitNumber={selectedUnit} />
         )}
+
         {activeSection === "lesson" && !selectedUnit && (
-          <div
-            style={{
-              position: "absolute",
-              top: "50%",
-              left: "50%",
-              transform: "translate(-50%, -50%)",
-              color: "#6c757d",
-            }}
-          >
+          <div className="select-unit-message">
             Please select a unit to begin.
           </div>
         )}
