@@ -3,9 +3,13 @@ import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Button, Card } from "react-bootstrap";
 
 // Wildcard imports
-const subsectionModules = import.meta.glob("./UnitSubsections/*.jsx", { eager: true });
+const subsectionModules = import.meta.glob("./UnitSubsections/*.jsx", {
+  eager: true,
+});
 const vocabModules = import.meta.glob("./Vocab/*.jsx", { eager: true });
-const conceptModules = import.meta.glob("./ConceptCheck/*.jsx", { eager: true });
+const conceptModules = import.meta.glob("./ConceptCheck/*.jsx", {
+  eager: true,
+});
 
 // Helper: get filename without extension
 const getName = (path) => path.split("/").pop().replace(".jsx", "");
@@ -43,7 +47,9 @@ function ConceptCheckWrapper({ unitNumber }) {
   const conceptSections = Object.keys(conceptModules)
     .map((path) => {
       const name = getName(path);
-      const match = name.match(new RegExp(`^Unit${unitNumber}_(\\d+)_ConceptCheck$`));
+      const match = name.match(
+        new RegExp(`^Unit${unitNumber}_(\\d+)_ConceptCheck$`)
+      );
       if (!match) return null;
       const Component = conceptModules[path].default;
       return {
@@ -80,16 +86,19 @@ function ConceptCheckWrapper({ unitNumber }) {
               variant="outline-secondary"
               size="sm"
               onClick={() =>
-                setCurrentIndex((i) => Math.min(i + 1, conceptSections.length - 1))
+                setCurrentIndex((i) =>
+                  Math.min(i + 1, conceptSections.length - 1)
+                )
               }
               disabled={currentIndex === conceptSections.length - 1}
             >
-              Next → 
+              Next →
             </Button>
           </div>
         )}
         <p className="mt-2 text-muted small">
-          Section {currentIndex + 1} of {conceptSections.length}: {conceptSections[currentIndex].name}
+          Section {currentIndex + 1} of {conceptSections.length}:{" "}
+          {conceptSections[currentIndex].name}
         </p>
       </Card.Body>
     </Card>
@@ -169,7 +178,10 @@ export default function UnitPage({ unitNumber }) {
               onClick={() => setSelectedSection(btn)}
             >
               {btn.number < 999
-                ? `Unit ${unitNumber}.${btn.number} ${btn.name.replace(/_/g, " ")}`
+                ? `Unit ${unitNumber}.${btn.number} ${btn.name.replace(
+                    /_/g,
+                    " "
+                  )}`
                 : btn.name.replace(/_/g, " ")}
             </Button>
           </Col>
