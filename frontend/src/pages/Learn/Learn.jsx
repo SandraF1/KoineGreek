@@ -9,7 +9,6 @@ import {
   unit3Flashcards,
   unit4Flashcards,
 } from "../../components/Flashcards/DummyCards";
-//import { unit3Flashcards } from "../components/Flashcards/unit3Flashcards";
 
 export default function Learn({ unitIds, setUnitIds }) {
   const [activeSection, setActiveSection] = useState("lesson");
@@ -108,11 +107,11 @@ export default function Learn({ unitIds, setUnitIds }) {
   };
 
   return (
-    <Container className="my-4" style={{ marginTop: "70px" }}>
+    <Container className="my-4 app-content">
       <h1 className="mb-3">Learn</h1>
 
       {/* Section buttons */}
-      <div className="d-flex flex-wrap gap-2 mb-3">
+      <div className="section-buttons">
         {[
           { key: "lesson", label: "Lesson Content" },
           { key: "vocab", label: "Vocabulary Flashcards" },
@@ -121,7 +120,7 @@ export default function Learn({ unitIds, setUnitIds }) {
         ].map((s) => (
           <Button
             key={s.key}
-            variant={activeSection === s.key ? "primary" : "outline-primary"}
+            className={activeSection === s.key ? "active" : ""}
             onClick={() => handleSectionClick(s.key)}
           >
             {s.label}
@@ -133,16 +132,10 @@ export default function Learn({ unitIds, setUnitIds }) {
       <div className="mb-3" style={{ height: "60px" }}>
         <UnitSelector
           units={allUnits}
-          selectedUnits={
-            activeSection === "lesson"
-              ? selectedUnit
-                ? [selectedUnit]
-                : []
-              : unitIds
-          }
+          selectedUnits={activeSection === "lesson" ? [selectedUnit] : unitIds}
           setSelectedUnits={
             activeSection === "lesson"
-              ? (arr) => setSelectedUnit(arr[0] || null)
+              ? (arr) => setSelectedUnit(arr[0])
               : setUnitIds
           }
           singleSelect={activeSection === "lesson"}
@@ -152,37 +145,25 @@ export default function Learn({ unitIds, setUnitIds }) {
       {/* Content area */}
       <div
         className="p-3 border rounded bg-light position-relative"
-        style={{
-          minHeight: "500px",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: activeSection === "vocab" ? "center" : "flex-start",
-          overflowY: "auto",
-        }}
+        style={{ minHeight: "500px" }}
       >
-        {activeSection === "lesson" && (
-          <div style={{ flex: 1, position: "relative" }}>
-            <div style={{ visibility: selectedUnit ? "visible" : "hidden" }}>
-              <UnitPage unitNumber={selectedUnit || 1} />
-            </div>
-            {!selectedUnit && (
-              <div
-                style={{
-                  position: "absolute",
-                  top: "50%",
-                  left: "50%",
-                  transform: "translate(-50%, -50%)",
-                  color: "#6c757d",
-                }}
-              >
-                Please select a unit to begin.
-              </div>
-            )}
+        {activeSection === "lesson" && selectedUnit && (
+          <UnitPage unitNumber={selectedUnit} />
+        )}
+        {activeSection === "lesson" && !selectedUnit && (
+          <div
+            style={{
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              color: "#6c757d",
+            }}
+          >
+            Please select a unit to begin.
           </div>
         )}
-
         {activeSection === "vocab" && <VocabFlashcards units={sortedUnits} />}
-
         {activeSection === "grammar" &&
           sortedUnits.map((unit) => (
             <Card key={unit} className="mb-3">
@@ -192,7 +173,6 @@ export default function Learn({ unitIds, setUnitIds }) {
               </Card.Body>
             </Card>
           ))}
-
         {activeSection === "quiz" &&
           (sortedUnits.length > 0 ? (
             <QuizFlashcards unitIds={sortedUnits} />
