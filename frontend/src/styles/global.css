@@ -23,7 +23,7 @@ body {
   top: 0;
   left: 0;
   right: 0;
-  background-color: #000000;
+  background-color: #000;
   color: white;
   z-index: 9999;
   display: flex;
@@ -77,20 +77,25 @@ body {
 }
 
 .section-buttons button {
-  flex: 0 1 180px; /* stable width */
+  flex: 0 1 180px;
   min-width: 120px;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 0.75rem;
   border-radius: 5px;
   border: 1px solid #ccc;
   background-color: #f9f9f9;
   color: black;
   cursor: pointer;
   transition: all 0.2s ease;
+
+  /* wrap text inside button */
+  white-space: normal;
+  word-break: break-word;
+  text-align: center;
 }
 
 .section-buttons button.active {
   border: 2px solid #ffff00;
-  background-color: #000000;
+  background-color: #000;
   color: #ffff00;
 }
 
@@ -229,11 +234,11 @@ label {
   .section-buttons {
     flex-direction: column;
     gap: 8px;
+    justify-content: center;
   }
   .section-buttons button {
-    width: 100%;
+    flex: 1 1 100%;
     min-width: unset;
-    flex: 1 1 auto;
   }
   .app-content {
     padding-top: 11rem;
@@ -253,5 +258,9 @@ label {
   }
   .app-content {
     padding-top: 13rem;
+  }
+  .section-buttons button {
+    font-size: 0.9rem;
+    padding: 0.4rem 0.5rem;
   }
 }
