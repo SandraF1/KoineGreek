@@ -77,9 +77,8 @@ body {
 }
 
 .section-buttons button {
-  flex: 0 1 auto; /* allow shrinking */
+  flex: 1 1 140px; /* grow and shrink with min width 140px */
   min-width: 140px;
-  max-width: 220px;
   padding: 0.5rem 0.75rem;
   border-radius: 5px;
   border: 1px solid #ccc;
