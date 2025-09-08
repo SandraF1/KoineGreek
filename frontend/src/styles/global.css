@@ -101,14 +101,18 @@ body {
 /* =======================
    Voc Flashcards Button Fix
    ======================= */
+
 #voc-flashcards-btn {
+  width: 200px !important;
+  max-width: 200px !important;
   min-width: 200px !important;
-  max-width: 200px !important; /* lock width */
   white-space: normal !important;
   overflow: visible !important;
   text-overflow: unset !important;
-  word-break: break-word !important; /* wrap long words */
-  text-align: center;
+  word-break: break-word !important;
+  display: inline-block !important;
+  text-align: center !important;
+  line-height: 1.4 !important;
 }
 
 /* =======================
