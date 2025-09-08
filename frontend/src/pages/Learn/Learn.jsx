@@ -76,8 +76,7 @@ export default function Learn({ unitIds, setUnitIds }) {
 
     return (
       <Card
-        className="text-center mb-3"
-        style={{ minHeight: "200px", cursor: "pointer" }}
+        className="text-center mb-3 flashcard"
         onClick={() => setFlipped((f) => !f)}
       >
         <Card.Body>
@@ -163,16 +162,19 @@ export default function Learn({ unitIds, setUnitIds }) {
             Please select a unit to begin.
           </div>
         )}
+
         {activeSection === "vocab" && <VocabFlashcards units={sortedUnits} />}
+
         {activeSection === "grammar" &&
           sortedUnits.map((unit) => (
-            <Card key={unit} className="mb-3">
+            <Card key={unit} className="mb-3 unit-background-card">
               <Card.Header>Unit {unit} Grammar Parser</Card.Header>
               <Card.Body>
                 <GrammarParser unit={unit} />
               </Card.Body>
             </Card>
           ))}
+
         {activeSection === "quiz" &&
           (sortedUnits.length > 0 ? (
             <QuizFlashcards unitIds={sortedUnits} />
