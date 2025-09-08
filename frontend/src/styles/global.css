@@ -1,4 +1,74 @@
 /* =======================
+   Base Styles
+   ======================= */
+html {
+  font-size: 24px;
+  overflow-y: scroll;
+}
+
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #333;
+  background-color: #f9f9f9;
+  margin: 0;
+}
+
+p {
+  margin-bottom: 1rem;
+}
+
+/* =======================
+   Navbar
+   ======================= */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: #000;
+  color: white;
+  z-index: 9999;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 1rem;
+  width: 100%;
+  height: auto;
+  box-sizing: border-box;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.navbar a {
+  color: white;
+  text-decoration: none;
+  margin-right: 1rem;
+  margin-bottom: 0.5rem;
+  transition: color 0.2s ease;
+}
+
+.navbar a:hover {
+  color: #ffff00;
+  text-decoration: underline;
+}
+
+.navbar a.active {
+  color: #ffff00;
+  font-weight: bold;
+}
+
+/* =======================
+   App Content
+   ======================= */
+.app-content {
+  padding-top: 90px; /* enough offset for fixed navbar */
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* =======================
    Section Buttons
    ======================= */
 .section-buttons {
@@ -9,7 +79,7 @@
   justify-content: flex-start;
 }
 
-/* 🔑 Custom wrapping style for section buttons only */
+/* Custom wrapping style for section buttons only */
 .btn-wrap {
   flex: 0 0 auto;
   min-width: 140px;
@@ -34,4 +104,155 @@
   border: 2px solid #ffff00;
   background-color: #000;
   color: #ffff00;
+}
+
+/* =======================
+   VOC Flashcards Button Fix
+   ======================= */
+#voc-flashcards-btn {
+  width: 200px !important;
+  max-width: 200px !important;
+  min-width: 200px !important;
+  white-space: normal !important;
+  overflow: visible !important;
+  text-overflow: unset !important;
+  word-break: break-word !important;
+  display: inline-block !important;
+  text-align: center !important;
+  line-height: 1.4 !important;
+}
+
+/* =======================
+   Flashcards
+   ======================= */
+.flashcard {
+  border: 2px solid #007bff;
+  border-radius: 10px;
+  background-color: #f0f8ff;
+  width: 280px;
+  max-width: 100%;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  word-break: break-word;
+  box-sizing: border-box;
+}
+
+.flashcard:hover {
+  transform: scale(1.05);
+}
+
+/* =======================
+   Unit Selector
+   ======================= */
+.unit-selector-wrapper {
+  height: 60px;
+}
+
+/* =======================
+   Content Area
+   ======================= */
+.content-area {
+  min-height: 500px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* ensures cards stay centered */
+}
+
+.select-unit-message {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #6c757d;
+}
+
+/* =======================
+   Background Cards
+   ======================= */
+.unit-background-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto 20px auto;
+  padding: 20px;
+  background-color: #e6f2ff;
+  border-radius: 10px;
+  box-sizing: border-box;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+/* =======================
+   Responsive Adjustments
+   ======================= */
+@media (max-width: 1024px) {
+  html {
+    font-size: 20px;
+  }
+  .flashcard {
+    width: 260px;
+  }
+  .app-content {
+    padding-top: 75px;
+  }
+}
+
+@media (max-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+
+  h1.learn-title {
+    font-size: 1.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .section-buttons {
+    flex-wrap: wrap; /* allow wrapping on mobile */
+    justify-content: center;
+  }
+
+  .section-buttons button {
+    flex: 1 1 100%; /* full width */
+    min-width: unset;
+    max-width: unset;
+    white-space: normal; /* wrap text */
+    overflow: visible;
+    text-overflow: unset;
+    margin-bottom: 8px; /* spacing between buttons */
+  }
+
+  .app-content {
+    padding-top: 100px; /* more offset so Learn title is not cut */
+  }
+
+  .unit-selector-wrapper {
+    height: auto; /* adjust height on mobile */
+  }
+}
+
+@media (max-width: 480px) {
+  html {
+    font-size: 14px;
+  }
+  .flashcard {
+    font-size: 1rem;
+    padding: 15px;
+  }
+  .navbar a {
+    margin-right: 0.5rem;
+  }
+  .app-content {
+    padding-top: 110px; /* extra offset for multi-line navbar */
+  }
 }
