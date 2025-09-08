@@ -70,24 +70,26 @@ body {
    ======================= */
 .section-buttons {
   display: flex;
-  flex-wrap: nowrap; /* prevent wrapping on desktop */
+  flex-wrap: nowrap; /* no wrap on desktop */
   gap: 10px;
   margin-bottom: 20px;
   justify-content: flex-start;
 }
 
 .section-buttons button {
-  flex: 0 0 auto; /* fixed width based on content */
-  min-width: 140px; /* never too small */
-  max-width: 220px; /* optional cap for long text */
+  flex: 0 0 auto; /* width depends on content but does not shrink/grow dynamically */
+  min-width: 140px; /* ensures button never too small */
+  max-width: 220px; /* optional maximum width */
   padding: 0.5rem 0.75rem;
   border-radius: 5px;
   border: 1px solid #ccc;
   background-color: #f9f9f9;
   color: black;
   cursor: pointer;
-  white-space: nowrap; /* keep text on one line */
   text-align: center;
+  white-space: nowrap; /* keep text on one line */
+  overflow: hidden; /* hide excess text */
+  text-overflow: ellipsis; /* add ... if text exceeds max width */
   transition: all 0.2s ease;
 }
 
@@ -124,6 +126,7 @@ body {
   font-size: 1.2rem;
   cursor: pointer;
   transition: transform 0.2s ease;
+  word-break: break-word; /* prevent overflow inside card */
 }
 
 .flashcard:hover {
@@ -136,7 +139,6 @@ body {
 
 .flashcard-back {
   color: #333;
-  word-break: break-word; /* prevent overflow */
 }
 
 /* =======================
@@ -231,8 +233,12 @@ label {
     justify-content: center;
   }
   .section-buttons button {
-    flex: 1 1 100%; /* fill width on mobile */
+    flex: 1 1 100%; /* full width on mobile */
     min-width: unset;
+    max-width: unset;
+    white-space: normal;
+    overflow: visible;
+    text-overflow: unset;
   }
 
   .app-content {
