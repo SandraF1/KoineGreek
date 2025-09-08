@@ -10,8 +10,6 @@ import {
   unit4Flashcards,
 } from "../../components/Flashcards/DummyCards";
 
-
-
 export default function Learn({ unitIds, setUnitIds }) {
   const [activeSection, setActiveSection] = useState("lesson");
   const [selectedUnit, setSelectedUnit] = useState(1);
@@ -107,6 +105,23 @@ export default function Learn({ unitIds, setUnitIds }) {
       </Card>
     );
   };
+
+  // ✅ FIX: Adjust app-content padding based on actual navbar height
+  useEffect(() => {
+    const adjustPadding = () => {
+      const navbar = document.querySelector(".navbar");
+      const appContent = document.querySelector(".app-content");
+
+      if (navbar && appContent) {
+        const height = navbar.offsetHeight;
+        appContent.style.paddingTop = `${height + 20}px`; // add buffer
+      }
+    };
+
+    adjustPadding();
+    window.addEventListener("resize", adjustPadding);
+    return () => window.removeEventListener("resize", adjustPadding);
+  }, []);
 
   return (
     <Container className="my-4 app-content">
