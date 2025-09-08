@@ -10,7 +10,7 @@ import {
   unit4Flashcards,
 } from "../../components/Flashcards/DummyCards";
 
-import "./global.css"; // Import the new CSS
+
 
 export default function Learn({ unitIds, setUnitIds }) {
   const [activeSection, setActiveSection] = useState("lesson");
